@@ -1,0 +1,81 @@
+# ============================================================
+# PUBLIC RELEASE EXPORT — CONFIGURATION
+# ============================================================
+#
+# Declares what to exclude, replace, and validate when
+# generating a sanitized public release of the AI Persona System.
+#
+# Used by: tools/export_public_release.py
+# ============================================================
+
+# Families whose personas are removed entirely from the export
+excluded_families:
+  - "Content Briefing"
+  - "Career Search"
+
+# Files and directories excluded from the export (glob patterns)
+excluded_files:
+  - "prompts/templates/**"
+  - "prompts/sequences/**"
+  - "templates/**"
+  - "methodology/skill-graph-guide.md"
+  - "voice-cards/sample-authorial-voice.md"
+  - "personas/archive/**"
+  - "exports/**"
+  - ".git/**"
+  - ".gitignore"
+  - "meta-orchestrator-framework.excalidraw"
+  - "tools/__pycache__/**"
+
+# Literal string replacements (applied longest-first to avoid partial matches)
+global_replacements:
+  "[Your Name]": "[Your Name]"
+  "[YOUR ORGANIZATION]": "[YOUR ORGANIZATION]"
+  "[Your Organization]": "[Your Organization]"
+  "[Your Organization]": "[Your Organization]"
+  "your-org": "your-org"
+  "ACMETECH": "ACMETECH"
+  "AcmeTech": "AcmeTech"
+  "Major Bank": "Major Bank"
+  "price-tracker-app": "price-tracker-app"
+  "price_tracker_app": "price_tracker_app"
+  "you@example.com": "you@example.com"
+  "sample-authorial-voice.md": "sample-authorial-voice.md"
+  "sample-authorial-voice": "sample-authorial-voice"
+  "Example Assessment": "Example Assessment"
+  "assessment-pipeline": "assessment-pipeline"
+  "assessment-pipeline": "assessment-pipeline"
+  "Example Assessment": "Example Assessment"
+  "Example": "Example"
+  "example": "example"
+  "briefing-pipeline": "briefing-pipeline"
+  "briefing": "briefing"
+  "Content Briefing": "Content Briefing"
+  "content briefing": "content briefing"
+
+# Regex replacements (applied after literal replacements)
+regex_replacements:
+  # Replace standalone "[Human Reviewer]" (as a person reference) with [Human Reviewer]
+  '\bKen\b': "[Human Reviewer]"
+  # Sanitize Windows paths
+  'C:[/\\\\]Users[/\\\\]ken[/\\\\][^\s"''`\)]+': "<your-path>"
+
+# Terms that must NOT appear in the final output (validation scan)
+forbidden_terms:
+  - "[Your Name]"
+  - "Bonnie"
+  - "Sophie"
+  - "[Your Organization]"
+  - "AcmeTech"
+  - "price-tracker-app"
+  - "ken253122"
+  - "Blackstone"
+  - "Major Bank"
+  - "Insight Capital"
+  - "Example"
+  - "briefing"
+  - "sample-authorial-voice"
+
+# Directories to skip during validation (contain sanitization tooling itself)
+validation_skip_dirs:
+  - "tools"
