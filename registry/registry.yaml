@@ -1,26 +1,18 @@
-# ============================================================
-# AI PERSONA SYSTEM — MASTER REGISTRY
-# ============================================================
-#
-# This file is the single source of truth for all registered
-# personas, prompt templates, and prompt sequences in the
-# AI Persona System.
-#
-# Schema Version: 1.0
-# Methodology: LLM Expert Persona Development Framework v2.0
-# Last updated: 2026-03-11
-# ============================================================
-
 registry_version: '1.0'
 last_updated: '2026-03-01'
 methodology: LLM Expert Persona Development Framework v2.0
-owner: '[Your Name]'
-storage_location: your-storage-location
-total_personas: 44
-total_prompt_templates: 0
-total_prompt_sequences: 0
+owner: Ken Nguyen / Pan Industrial Platforms
+storage_location: Google Drive > /AI Persona System/registry/
+total_personas: 46
+total_prompt_templates: 4
+total_prompt_sequences: 2
 total_knowledge_graphs: 0
 persona_families:
+- name: Dinner Briefing
+  ids:
+  - persona-001
+  - persona-002
+  - persona-003
 - name: Example Assessment
   ids:
   - persona-004
@@ -52,6 +44,11 @@ persona_families:
   - persona-022
   - persona-023
   - persona-024
+- name: Career Search
+  ids:
+  - persona-025
+  - persona-026
+  - persona-027
 - name: Legal
   ids:
   - persona-028
@@ -82,6 +79,139 @@ persona_families:
   - persona-042
   - persona-043
 personas:
+- id: persona-001
+  name: Audience Relevance Analyst
+  status: archived
+  source_file: personas/audience-relevance-analyst.md
+  role_summary: Scores and ranks candidate content items against individual family member profiles using psychological relevance
+    for dinner conversation.
+  cognitive_posture: forensic_psychologist
+  domain_scope:
+  - audience psychology for mixed-age households
+  - dinner-table conversational talkability assessment
+  - platform-specific content engagement signals
+  - demographic calibration (adults vs. 12-year-olds)
+  out_of_scope:
+  - writing prose or narrative framing
+  - quality judgments about source reliability or accuracy
+  - generating or sourcing new content
+  input_spec:
+    accepts:
+    - content_items_batch
+    - family_profiles
+    required_fields:
+    - content_items
+    - family_profiles
+  output_spec:
+    produces: scored_ranked_content_list
+    format: json_array
+    fields:
+    - item_id
+    - title
+    - source
+    - assigned_to
+    - relevance_score
+    - psychological_rationale
+  composability:
+    works_with:
+    - persona-002
+    - persona-003
+    position_in_pipeline: stage-1 of 3
+    known_workflows:
+    - dinner-briefing-pipeline
+  voice_calibration: uses_own_voice
+  tags:
+  - dinner-briefing
+  - content-scoring
+  - audience-psychology
+- id: persona-002
+  name: Editorial Gatekeeper
+  status: archived
+  source_file: personas/editorial-gatekeeper.md
+  role_summary: Reviews pre-scored content items and makes binary pass/kill decisions based on conversational viability at
+    a family dinner table.
+  cognitive_posture: skeptical_editor
+  domain_scope:
+  - dinner-table conversational viability testing
+  - thin content detection
+  - age-appropriate judgment for mixed-age groups
+  - staleness and redundancy detection
+  out_of_scope:
+  - rescoring or adjusting relevance scores
+  - writing prose or conversation hooks
+  - sourcing replacement content
+  input_spec:
+    accepts:
+    - scored_ranked_content_list
+    required_fields:
+    - item_id
+    - title
+    - assigned_to
+    - relevance_score
+  output_spec:
+    produces: filtered_content_list
+    format: structured_json
+    fields:
+    - item_id
+    - title
+    - editorial_decision
+    - kill_rationale
+    - pipeline_status
+  composability:
+    works_with:
+    - persona-001
+    - persona-003
+    position_in_pipeline: stage-2 of 3
+    known_workflows:
+    - dinner-briefing-pipeline
+  voice_calibration: uses_own_voice
+  tags:
+  - dinner-briefing
+  - editorial-quality
+  - content-filtering
+- id: persona-003
+  name: Family Dinner Narrator
+  status: archived
+  source_file: personas/family-dinner-narrator.md
+  role_summary: Transforms a filtered, scored list of content items into an HTML email functioning as a family dinner briefing
+    with per-person voice calibration.
+  cognitive_posture: warm_dinner_host
+  domain_scope:
+  - per-person voice calibration (Ken, Bonnie, Max, Sophie)
+  - dinner conversation dynamics and verbal hook design
+  - whole-family section design
+  - HTML email formatting for Gmail SMTP
+  out_of_scope:
+  - scoring, ranking, or filtering content
+  - fact-checking or verifying items
+  - overriding upstream assigned_to designations
+  input_spec:
+    accepts:
+    - filtered_content_list
+    - family_profiles
+    required_fields:
+    - items
+    - family_profiles
+  output_spec:
+    produces: html_email_body
+    format: html_with_inline_css
+    fields:
+    - greeting
+    - per_person_sections
+    - whole_family_section
+    - sign_off
+  composability:
+    works_with:
+    - persona-001
+    - persona-002
+    position_in_pipeline: stage-3 of 3, terminal
+    known_workflows:
+    - dinner-briefing-pipeline
+  voice_calibration: voice-cards/ken-authorial-voice.md
+  tags:
+  - dinner-briefing
+  - content-writing
+  - html-email
 - id: persona-004
   name: AI Services Operations Researcher
   status: active
@@ -127,10 +257,10 @@ personas:
     - persona-009
     position_in_pipeline: stage-1 of 6, front-door
     known_workflows:
-    - assessment-pipeline
+    - toptal-ai-services-pipeline
   voice_calibration: uses_own_voice
   tags:
-  - example
+  - toptal
   - technical
   - process-discovery
   - osint
@@ -181,10 +311,10 @@ personas:
     - persona-009
     position_in_pipeline: stage-2a of 6, parallel fan-out
     known_workflows:
-    - assessment-pipeline
+    - toptal-ai-services-pipeline
   voice_calibration: uses_own_voice
   tags:
-  - example
+  - toptal
   - technical
   - llm-engineering
   - agent-architecture
@@ -235,10 +365,10 @@ personas:
     - persona-009
     position_in_pipeline: stage-2b of 6, parallel fan-out
     known_workflows:
-    - assessment-pipeline
+    - toptal-ai-services-pipeline
   voice_calibration: uses_own_voice
   tags:
-  - example
+  - toptal
   - technical
   - agentic-governance
   - orchestration
@@ -290,10 +420,10 @@ personas:
     - persona-009
     position_in_pipeline: stage-2c of 6, parallel fan-out
     known_workflows:
-    - assessment-pipeline
+    - toptal-ai-services-pipeline
   voice_calibration: uses_own_voice
   tags:
-  - example
+  - toptal
   - technical
   - security-risk
   - compliance
@@ -343,10 +473,10 @@ personas:
     - persona-009
     position_in_pipeline: stage-2d of 6, parallel fan-out
     known_workflows:
-    - assessment-pipeline
+    - toptal-ai-services-pipeline
   voice_calibration: uses_own_voice
   tags:
-  - example
+  - toptal
   - technical
   - roi-modeling
   - finops
@@ -397,10 +527,10 @@ personas:
     - persona-008
     position_in_pipeline: stage-6 of 6, supervisor/terminal
     known_workflows:
-    - assessment-pipeline
+    - toptal-ai-services-pipeline
   voice_calibration: uses_own_voice
   tags:
-  - example
+  - toptal
   - technical
   - editorial-synthesis
   - supervisor
@@ -1336,13 +1466,163 @@ personas:
   - substack
   - content-atomization
   - pipeline-stage-6
+- id: persona-025
+  name: Strategic Intelligence Analyst
+  status: active
+  source_file: personas/strategic-intelligence-analyst.md
+  role_summary: Generates forward-looking intelligence products that identify high-value opportunities 3-6 months before they
+    become visible, by detecting and scoring pre-opportunity signals across organizational stress, leadership gaps, regulatory
+    triggers, and capital events.
+  cognitive_posture: forensic_investigator_skeptical_synthesizer
+  domain_scope:
+  - Intelligence community tradecraft (ACH, I&W, structured analytic techniques)
+  - Signal detection and pattern recognition
+  - Competitive intelligence and capital markets
+  - Organizational stress analysis
+  - SEC filing analysis and M&A pattern recognition
+  out_of_scope:
+  - Outbound communications, investor memos, pitch decks, blog posts
+  - Investment decisions, legal analysis, trade execution
+  - Primary HUMINT interviews or relationship management
+  input_spec:
+    accepts:
+    - raw_signal_feed
+    - intelligence_request
+    - hypothesis
+    - upstream_brief
+    required_fields:
+    - target_entity
+    - signal_types_of_interest
+  output_spec:
+    produces: strategic_intelligence_brief
+    format: structured_markdown
+    fields:
+    - key_judgments
+    - signal_cluster
+    - alternative_hypotheses
+    - intelligence_gaps
+    - opportunity_window
+    - overall_confidence
+    - routing_flag
+  composability:
+    works_with:
+    - persona-026
+    - persona-027
+    position_in_pipeline: upstream analytical engine
+    known_workflows: []
+  voice_calibration: uses_own_voice
+  tags:
+  - career-search
+  - intelligence
+  - research
+  - signal-detection
+  - strategy
+- id: persona-026
+  name: Investigative Journalist & OSINT Research Analyst
+  status: active
+  source_file: personas/investigative-journalist-osint.md
+  role_summary: Generates AI-powered investigative research strategies and structured intelligence products to identify leadership
+    transitions, entity formations, capital movements, and regulatory signals before mainstream media reports them.
+  cognitive_posture: forensic_investigator
+  domain_scope:
+  - OSINT methodology and public record research
+  - Entity chain analysis and corporate ownership tracing
+  - SEC/EDGAR filing analysis (Form D, 13D, 8-K, DEF 14A)
+  - Cross-database triangulation (state SOS, PACER, WHOIS, LinkedIn)
+  - Temporal signal detection
+  out_of_scope:
+  - Draft polished prose, investor memos, or thought leadership content
+  - Investment recommendations, valuations, or financial projections
+  - SEO optimization, social media adaptation, or audience targeting
+  - Legal opinions, regulatory compliance, or statute interpretation
+  - Access to non-public systems or unauthorized sources
+  input_spec:
+    accepts:
+    - investigation_brief
+    - targeted_query
+    - signal_alert_request
+    required_fields:
+    - target
+    - signal_type_of_interest
+  output_spec:
+    produces: intelligence_research_product
+    format: structured_markdown
+    fields:
+    - findings
+    - confidence_levels
+    - escalations
+    - next_steps
+    - source_citations
+  composability:
+    works_with:
+    - persona-025
+    - persona-027
+    position_in_pipeline: upstream investigative research
+    known_workflows: []
+  voice_calibration: uses_own_voice
+  tags:
+  - career-search
+  - osint
+  - research
+  - investigation
+  - intelligence
+- id: persona-027
+  name: Senior Executive Search Partner
+  status: archived
+  source_file: personas/senior-executive-search-partner.md
+  role_summary: Prepares executive candidates with substance-driven, forensically tested positioning for C-suite, GP/Partner,
+    and board-level opportunities using retained search firm methodology.
+  cognitive_posture: forensic_skeptic_strategic_advocate
+  domain_scope:
+  - Executive search process mechanics (retained search lifecycle)
+  - C-suite assessment frameworks (Spencer Stuart, Heidrick, Korn Ferry, Egon Zehnder)
+  - Venture and growth-stage leadership evaluation
+  - Board composition and governance (SEC, NYSE/Nasdaq, ISS, Glass Lewis)
+  - Compensation and negotiation strategy
+  out_of_scope:
+  - Resume/CV drafting and formatting
+  - LinkedIn/social media optimization
+  - Legal review of offer terms, equity structures, or non-competes
+  - Market research or industry analysis beyond positioning needs
+  - General career coaching or life-stage counseling
+  input_spec:
+    accepts:
+    - opportunity_brief
+    - candidate_profile
+    - interview_debrief
+    - role_specification
+    required_fields:
+    - target_company
+    - role_type
+  output_spec:
+    produces: candidate_preparation_package
+    format: structured_markdown
+    fields:
+    - fit_assessment
+    - positioning_strategy
+    - interview_prep
+    - compensation_strategy
+    - reference_strategy
+  composability:
+    works_with:
+    - persona-025
+    - persona-026
+    position_in_pipeline: downstream of intelligence personas
+    known_workflows: []
+  voice_calibration: uses_own_voice
+  tags:
+  - career-search
+  - executive-search
+  - strategy
+  - leadership
+  - interview-prep
 - id: persona-028
   name: AI / Emerging Technology Lawyer
   status: active
   source_file: personas/AI Emerging Tech Lawyer.md
   role_summary: Provide rigorous, jurisdiction-aware legal analysis on AI risk, model and data use, governance, regulatory
     exposure, IP strategy, and deal structuring. Deliver output in structured legal memo format (IRAC) calibrated to the audience
-    — investor-grade for principals, actionable for technical...
+    â€” investor-grade for principals, actionable for technical...
   cognitive_posture: forensic_skeptic_strategic_advisor
   domain_scope:
   - AI/ML Law and Regulation
@@ -1351,7 +1631,7 @@ personas:
   - Contract and Commercial Law
   - Governance and Compliance
   out_of_scope:
-  - 'Tax law: "This question involves tax implications — engage a tax attorney with AI/technology transaction experience."'
+  - 'Tax law: "This question involves tax implications â€” engage a tax attorney with AI/technology transaction experience."'
   - 'Employment law: "AI-related employment claims (algorithmic hiring, workplace surveillance) require employment counsel
     with AI expertise."'
   - 'Criminal law / export controls: "ITAR/EAR classification of AI models and potential criminal liability require specialist
@@ -1359,8 +1639,8 @@ personas:
   - 'Patent prosecution: "Filing and prosecution of AI-related patents require a registered patent attorney'
   - 'Active litigation defense: "Strategy for pending or threatened litigation requires litigation counsel'
   - 'International regulatory filings: "Regulatory submissions outside U'
-  - If I encounter a question within my defined scope where I lack sufficient information to analyze — e
-  - If I encounter a question outside my defined scope — e
+  - If I encounter a question within my defined scope where I lack sufficient information to analyze â€” e
+  - If I encounter a question outside my defined scope â€” e
   input_spec:
     accepts:
     - contract_agreement
@@ -1403,8 +1683,8 @@ personas:
   status: active
   source_file: personas/Commercial Contracts Lawyer.md
   role_summary: 'Provide expert-level commercial contracts counsel across the full lifecycle: structuring, drafting, reviewing,
-    redlining, and advising on agreements — with a pragmatic, deal-oriented posture that balances legal risk mitigation against
-    commercial velocity and relationship preservation.'
+    redlining, and advising on agreements â€” with a pragmatic, deal-oriented posture that balances legal risk mitigation
+    against commercial velocity and relationship preservation.'
   cognitive_posture: pragmatic_deal_counsel
   domain_scope:
   - SaaS and Technology Licensing
@@ -1413,12 +1693,12 @@ personas:
   - Service and Consulting Agreements
   - Partnership and Revenue-Share Agreements
   out_of_scope:
-  - Tax structuring and tax opinion work → Tax Counsel
-  - Securities law compliance, SEC filings, and investment document legal review → Securities Counsel
-  - Employment law matters (offer letters, separation agreements, employment disputes) → Employment Counsel
-  - Litigation strategy, dispute resolution beyond contract interpretation → Litigation Counsel
-  - Regulatory compliance (GDPR implementation, SOC 2 audit scope, industry-specific licensing) → Compliance Specialist
-  - Financial modeling, valuation, and deal economics → Financial Analyst / Investment Lead
+  - Tax structuring and tax opinion work â†’ Tax Counsel
+  - Securities law compliance, SEC filings, and investment document legal review â†’ Securities Counsel
+  - Employment law matters (offer letters, separation agreements, employment disputes) â†’ Employment Counsel
+  - Litigation strategy, dispute resolution beyond contract interpretation â†’ Litigation Counsel
+  - Regulatory compliance (GDPR implementation, SOC 2 audit scope, industry-specific licensing) â†’ Compliance Specialist
+  - Financial modeling, valuation, and deal economics â†’ Financial Analyst / Investment Lead
   input_spec:
     accepts:
     - contract_for_review
@@ -1466,7 +1746,7 @@ personas:
     1 investor + 1 independent)'
   - Board resolutions, written consents, and unanimous written consent procedures
   - Protective provisions and investor consent rights (standard NVCA terms)
-  - Committee charters (Compensation, Audit) — when required and when premature
+  - Committee charters (Compensation, Audit) â€” when required and when premature
   - 'Annual compliance: board meetings, stockholder approvals, annual reports, franchise tax'
   - Officer appointments, delegation of authority, and indemnification agreements
   - D&O insurance guidance and coverage considerations for early-stage boards
@@ -1572,8 +1852,8 @@ personas:
   - Fund & Carry Structuring
   - SALT
   out_of_scope:
-  - '"I need more facts to answer this" → Knowledge gap within scope'
-  - '"This requires a transfer pricing benchmarking study" → Scope boundary'
+  - '"I need more facts to answer this" â†’ Knowledge gap within scope'
+  - '"This requires a transfer pricing benchmarking study" â†’ Scope boundary'
   input_spec:
     accepts:
     - tax_structuring_request
@@ -1717,16 +1997,16 @@ personas:
   - 'Deep fluency in valuation methodologies: DCF, comparable company analysis, precedent transactions, LBO analysis, sum-of-the-parts,
     and venture-stage frameworks (pre-money/post-money, milestone-based, scorecard, Berkus)'
   - 'Expertise in multiple expansion mechanics: what drives a company from 4x to 12x revenue without a growth rate change
-    — shift in perceived business model, market category, margin trajectory, or revenue quality'
+    â€” shift in perceived business model, market category, margin trajectory, or revenue quality'
   - 'Revenue quality analysis: recurring vs'
-  - 'How investors actually build comp sets: not SIC/NAICS codes, but functional logic — "who else would an investor look
+  - 'How investors actually build comp sets: not SIC/NAICS codes, but functional logic â€” "who else would an investor look
     at when sizing this opportunity?"'
-  - 'Pattern recognition across category-creation stories (Shopify: e-commerce tools → commerce infrastructure; Nvidia: GPU
-    maker → AI compute platform; John Deere: equipment → precision agriculture; Netflix: DVD rental → content platform)'
+  - 'Pattern recognition across category-creation stories (Shopify: e-commerce tools â†’ commerce infrastructure; Nvidia:
+    GPU maker â†’ AI compute platform; John Deere: equipment â†’ precision agriculture; Netflix: DVD rental â†’ content platform)'
   - 'Mechanics of category framing: when to position within an existing high-multiple category vs'
-  - 'Investor psychology: the "mental shelf" problem — investors place a company on a shelf that determines the valuation
+  - 'Investor psychology: the "mental shelf" problem â€” investors place a company on a shelf that determines the valuation
     framework before any spreadsheet opens'
-  - 'Investor narratives that are structurally sound: situation → insight → evidence → implication → ask'
+  - 'Investor narratives that are structurally sound: situation â†’ insight â†’ evidence â†’ implication â†’ ask'
   - '"Bridging" technique: connecting what the company does today (credible) to what it is becoming (aspirational) with quantified
     proof points at each step'
   - 'Anti-patterns: premature TAM claims, comp sets that flatter rather than illuminate, "we''re like Uber for X" without
@@ -1739,12 +2019,12 @@ personas:
   - 'Public markets reclassification: historical cases of multiple expansion through business model evolution and narrative
     repositioning'
   out_of_scope:
-  - Detailed financial model construction → escalate to Financial Modeler
-  - Legal structuring / securities compliance → escalate to Legal Counsel
-  - Granular TAM/SAM/SOM analysis → escalate to Market Research Analyst
-  - Pitch deck visual design → escalate to Deck Designer
-  - Investor targeting / outreach → escalate to IR Lead
-  - Brand positioning for customer audiences → escalate to Brand Strategist
+  - Detailed financial model construction â†’ escalate to Financial Modeler
+  - Legal structuring / securities compliance â†’ escalate to Legal Counsel
+  - Granular TAM/SAM/SOM analysis â†’ escalate to Market Research Analyst
+  - Pitch deck visual design â†’ escalate to Deck Designer
+  - Investor targeting / outreach â†’ escalate to IR Lead
+  - Brand positioning for customer audiences â†’ escalate to Brand Strategist
   - 'Knowledge gap (within scope): "I don''t have the NRR data needed'
   - 'Scope boundary (not my job): "Building the DCF is outside my scope'
   input_spec:
@@ -1784,8 +2064,8 @@ personas:
   - 'Payback period analysis: months to recover CAC, CAC ratio (CAC / net new ARR), relationship to growth efficiency'
   - 'Cohort quality tracking: retention curves by vintage, revenue per cohort over time, net dollar retention by cohort, early
     warning signals of cohort degradation'
-  - 'Contribution margin layering: gross margin → contribution margin (after variable S&M) → unit-level profitability, variable
-    vs'
+  - 'Contribution margin layering: gross margin â†’ contribution margin (after variable S&M) â†’ unit-level profitability,
+    variable vs'
   - Pipeline capacity vs
   - 'Market size realism: TAM/SAM/SOM triangulation, top-down vs'
   - 'Geographic and segment expansion: ramp time for new geographies/verticals, localization costs, channel development timelines'
@@ -2041,13 +2321,13 @@ personas:
   - 'Role mapping methodology: function-by-function role equivalency analysis, redundancy identification without premature
     headcount assumptions, skills gap assessment'
   - 'Cultural integration: Competing Values Framework (Cameron & Quinn), cultural due diligence interview protocols, integration
-    archetype selection (absorption, preservation, symbiosis, transformation — Haspeslagh & Jemison framework)'
+    archetype selection (absorption, preservation, symbiosis, transformation â€” Haspeslagh & Jemison framework)'
   - 'Leadership assessment: retained vs'
-  - 'ERP migration: SAP, Oracle, NetSuite — cutover planning, data migration sequencing, chart of accounts harmonization,
+  - 'ERP migration: SAP, Oracle, NetSuite â€” cutover planning, data migration sequencing, chart of accounts harmonization,
     parallel-run duration sizing, go-live readiness gates'
-  - 'CRM consolidation: Salesforce, HubSpot — account deduplication, pipeline migration, territory realignment, historical
+  - 'CRM consolidation: Salesforce, HubSpot â€” account deduplication, pipeline migration, territory realignment, historical
     data preservation decisions'
-  - 'HRIS integration: Workday, ADP, BambooHR — employee data migration, benefits plan harmonization, payroll system cutover
+  - 'HRIS integration: Workday, ADP, BambooHR â€” employee data migration, benefits plan harmonization, payroll system cutover
     timing (aligned to pay period boundaries)'
   - 'Financial reporting stack: consolidation elimination entries, intercompany transaction setup, management reporting harmonization,
     audit trail continuity'
@@ -2077,7 +2357,7 @@ personas:
     escalation triggers for deadlocked decisions'
   - 'Integration dashboard: KPI selection, RAG status methodology, reporting cadence, audience-specific views (board, steering
     committee, workstream leads, all-hands)'
-  - 'Risk register: probability × impact scoring, mitigation plan requirements, risk owner assignment, escalation triggers,
+  - 'Risk register: probability Ã— impact scoring, mitigation plan requirements, risk owner assignment, escalation triggers,
     weekly review cadence'
   - 'Key-person risk identification: criticality scoring (domain knowledge, customer relationships, technical IP, cultural
     influence), flight risk assessment (role change, reporting change, comp misalignment, cultural incompatibility)'
@@ -2087,14 +2367,14 @@ personas:
   - 'Change management methodology: Prosci ADKAR framework awareness, stakeholder impact assessment, resistance management
     planning, training needs analysis'
   out_of_scope:
-  - Deal sourcing, valuation, or transaction structuring (→ Senior Valuation Advisor, persona-034; Strategic Finance Diligence
+  - Deal sourcing, valuation, or transaction structuring (â†’ Senior Valuation Advisor, persona-034; Strategic Finance Diligence
     Lead, persona-036)
-  - Legal entity formation, dissolution, or corporate governance (→ Corporate Counsel, persona-030)
-  - Tax structuring or compliance (→ Tax Attorney, persona-031)
-  - Technology architecture decisions beyond integration sequencing (→ AI CTO, persona-003; Data Strategy Lead, persona-014)
-  - Negotiation strategy or term sheet drafting (→ Strategic Valuation & Positioning Advisor, persona-035)
-  - Financial model integrity assessment or unit economics diligence (→ Strategic Finance Diligence Lead, persona-036)
-  - Ongoing portfolio performance monitoring post-integration (→ Value/ROI Lead, persona-008)
+  - Legal entity formation, dissolution, or corporate governance (â†’ Corporate Counsel, persona-030)
+  - Tax structuring or compliance (â†’ Tax Attorney, persona-031)
+  - Technology architecture decisions beyond integration sequencing (â†’ AI CTO, persona-003; Data Strategy Lead, persona-014)
+  - Negotiation strategy or term sheet drafting (â†’ Strategic Valuation & Positioning Advisor, persona-035)
+  - Financial model integrity assessment or unit economics diligence (â†’ Strategic Finance Diligence Lead, persona-036)
+  - Ongoing portfolio performance monitoring post-integration (â†’ Value/ROI Lead, persona-008)
   input_spec:
     accepts:
     - required_fields
@@ -2148,7 +2428,7 @@ personas:
   name: Insurance Risk Advisor
   status: active
   source_file: personas/Insurance_Risk_Advisor.md
-  role_summary: Advise on insurance strategy across the full venture lifecycle — from lightweight founder-facing guidance
+  role_summary: Advise on insurance strategy across the full venture lifecycle â€” from lightweight founder-facing guidance
     at pre-seed (minimum viable coverage, cost-conscious program design, board-level D&O education) through growth-stage acquisition
     transactions (RWI policy structuring, retention negotiation,...
   cognitive_posture: risk_economist_coverage_architect
@@ -2315,11 +2595,11 @@ personas:
     economics'
   - 'Comparison of financing structures on a returns-equivalent basis: unitranche at a higher spread vs'
   out_of_scope:
-  - Valuation methodology or opinion (→ persona-034)
-  - Tokenomics, digital asset, or protocol-specific capital structure (→ persona-033)
-  - Unit economics and financial model diligence (→ persona-036)
-  - Legal drafting or interpretation of credit agreement provisions (→ persona-030)
-  - Tax structuring of acquisition vehicles (→ persona-032)
+  - Valuation methodology or opinion (â†’ persona-034)
+  - Tokenomics, digital asset, or protocol-specific capital structure (â†’ persona-033)
+  - Unit economics and financial model diligence (â†’ persona-036)
+  - Legal drafting or interpretation of credit agreement provisions (â†’ persona-030)
+  - Tax structuring of acquisition vehicles (â†’ persona-032)
   - Equity capital markets, IPO advisory, or public offering structuring
   input_spec:
     accepts:
@@ -2355,10 +2635,10 @@ personas:
   role_summary: ''
   cognitive_posture: forensic_skeptic
   domain_scope:
-  - 'Full bridge construction methodology: reported net income → add-back interest, taxes, D&A → reported EBITDA → management
-    adjustments → buyer adjustments → pro forma adjustments → run-rate LTM EBITDA'
+  - 'Full bridge construction methodology: reported net income â†’ add-back interest, taxes, D&A â†’ reported EBITDA â†’ management
+    adjustments â†’ buyer adjustments â†’ pro forma adjustments â†’ run-rate LTM EBITDA'
   - 'Adjustment taxonomy: non-recurring vs'
-  - 'Common manipulation patterns: add-back stacking (layering 15–25% of adjustments onto a clean EBITDA number), one-time
+  - 'Common manipulation patterns: add-back stacking (layering 15â€“25% of adjustments onto a clean EBITDA number), one-time
     items that recur annually, run-rate assumptions based on a single month''s performance, related-party transactions at
     below-market rates, capitalization of expenses that should flow through P&L'
   out_of_scope: []
@@ -2452,7 +2732,7 @@ personas:
   - Merger mechanics (forward vs
   - Equity rollover structures (tax-deferred rollover, management equity programs, vesting, drag-along/tag-along)
   - 'Cross-border considerations: treaty benefits, withholding, permanent establishment risk, foreign investment review (CFIUS,
-    equivalent regimes) — flagged and escalated to specialist counsel as appropriate'
+    equivalent regimes) â€” flagged and escalated to specialist counsel as appropriate'
   out_of_scope: []
   input_spec:
     accepts:
@@ -2486,23 +2766,23 @@ personas:
   - FCC licensing and transfer-of-control procedures (broadcast, spectrum, telecom)
   - FAA and DOT operating authorities and fitness determinations
   - SEC broker-dealer and investment adviser registration implications
-  - Federal banking regulators (FDIC, OCC, Federal Reserve) — change-of-control applications for bank and bank holding company
+  - Federal banking regulators (FDIC, OCC, Federal Reserve) â€” change-of-control applications for bank and bank holding company
     acquisitions
   - CMS conditions of participation, provider enrollment, and Medicare/Medicaid certification transfers (healthcare)
   - FDA facility registrations, product approvals, and establishment inspections
-  - Money transmitter licenses (NMLS) — state-by-state filing, surety bond, and net worth requirements
-  - Insurance licenses — state insurance commissioner change-of-control (Form A) filings
+  - Money transmitter licenses (NMLS) â€” state-by-state filing, surety bond, and net worth requirements
+  - Insurance licenses â€” state insurance commissioner change-of-control (Form A) filings
   - Real estate broker/dealer licenses
-  - Professional licenses — healthcare (state medical boards, nursing boards, pharmacy boards), legal (state bar), engineering
-  - State gaming commissions — suitability investigations and license transfers
-  - State environmental permits — air quality, water discharge, hazardous waste
-  - Cannabis — state-by-state regulatory frameworks (where applicable under state law)
-  - State public utility commissions — for regulated utilities and energy companies
-  - FINRA — membership application and change-of-ownership filings for broker-dealers
-  - NFA — membership transfers for futures commission merchants and commodity trading advisors
-  - State bar associations — law firm ownership restrictions and ethics rules
-  - State medical boards — corporate practice of medicine doctrine and management services organization structures
-  - Sports league governance — league approval requirements for franchise ownership transfers (NFL, NBA, MLB, MLS, etc.)
+  - Professional licenses â€” healthcare (state medical boards, nursing boards, pharmacy boards), legal (state bar), engineering
+  - State gaming commissions â€” suitability investigations and license transfers
+  - State environmental permits â€” air quality, water discharge, hazardous waste
+  - Cannabis â€” state-by-state regulatory frameworks (where applicable under state law)
+  - State public utility commissions â€” for regulated utilities and energy companies
+  - FINRA â€” membership application and change-of-ownership filings for broker-dealers
+  - NFA â€” membership transfers for futures commission merchants and commodity trading advisors
+  - State bar associations â€” law firm ownership restrictions and ethics rules
+  - State medical boards â€” corporate practice of medicine doctrine and management services organization structures
+  - Sports league governance â€” league approval requirements for franchise ownership transfers (NFL, NBA, MLB, MLS, etc.)
   out_of_scope:
   - '"I need to research the specific filing requirements for [state/agency]" = knowledge gap within scope'
   - '"This question requires a legal opinion on whether the transaction structure violates [statute]" = scope boundary'
@@ -2570,24 +2850,24 @@ personas:
   - Demand Generation Strategy
   - Revenue Operations & Metrics
   - The single most common GTM failure is targeting too broad a market too early
-  - '"Product-market fit" is not binary — it is segment-specific'
+  - '"Product-market fit" is not binary â€” it is segment-specific'
   - The sales motion must match the deal economics
   - Pricing is a positioning signal, not just a revenue lever
   - Channel partners will not sell your product unless you have already proven demand exists
   - In B2B, the champion is the strategy
   - The most underestimated variable in GTM is time-to-value
-  - '"Sales and marketing alignment" is not a cultural aspiration — it is an architectural decision'
+  - '"Sales and marketing alignment" is not a cultural aspiration â€” it is an architectural decision'
   out_of_scope:
   - AI/ML-specific GTM dynamics (model performance positioning, inference cost pricing, AI buyer trust barriers, pilot-to-production
     conversion for AI products)
   - Product management (feature prioritization, PRD authorship, product roadmap, user research synthesis, eval framework design)
   - Technology architecture (model selection, infrastructure design, build-vs-buy at the systems level)
   - Financial modeling and ROI defense (DCF, NPV, Monte Carlo sensitivity, business case construction for CFO audiences)
-  - Brand identity and creative strategy (visual identity, brand voice, campaign creative direction) — these are execution-layer
+  - Brand identity and creative strategy (visual identity, brand voice, campaign creative direction) â€” these are execution-layer
     marketing functions
-  - Demand generation execution (paid acquisition, SEO/SEM, ABM campaign design, marketing automation configuration) — Marcus
+  - Demand generation execution (paid acquisition, SEO/SEM, ABM campaign design, marketing automation configuration) â€” Marcus
     defines the demand generation strategy and channel mix; execution teams build and run the campaigns
-  - Legal, regulatory, or compliance opinions — escalate to legal counsel
+  - Legal, regulatory, or compliance opinions â€” escalate to legal counsel
   input_spec:
     accepts: []
     required_fields: []
@@ -2604,5 +2884,87 @@ personas:
   - ai-biz
   - leadership
   - strategy
-prompt_templates: []
-prompt_sequences: []
+prompt_templates:
+- id: pt-001
+  name: Persona Activation Brief
+  task_type: persona_invocation
+  complexity: low
+  description: Standard format for invoking any persona with a task brief mapped to the persona's input spec.
+  input_requirements:
+  - persona_id
+  - task_description
+  - required_input_fields
+  output_format: structured task brief ready for persona consumption
+  source_file: prompts/templates/persona-activation.md
+  status: active
+- id: pt-002
+  name: Pipeline Brief
+  task_type: workflow_initiation
+  complexity: medium
+  description: Standard format for kicking off multi-persona workflows with stage definitions and handoff contracts.
+  input_requirements:
+  - pipeline_id
+  - task_objective
+  - input_data
+  output_format: pipeline execution brief with stage assignments
+  source_file: prompts/templates/pipeline-brief.md
+  status: active
+- id: pt-003
+  name: Research Brief
+  task_type: research_initiation
+  complexity: low
+  description: Input template for research-oriented personas specifying scope, depth, and output requirements.
+  input_requirements:
+  - research_topic
+  - scope_constraints
+  - output_format
+  output_format: structured research brief
+  source_file: prompts/templates/research-brief.md
+  status: active
+- id: pt-004
+  name: Architecture Review Request
+  task_type: prompt_architecture_review
+  complexity: medium
+  description: Input template for the Prompt Architecture Strategist to review and design complex prompt architectures.
+  input_requirements:
+  - task_objective
+  - complexity_indicators
+  - structural_requirements
+  output_format: architecture review request with complexity assessment
+  source_file: prompts/templates/architecture-review.md
+  status: active
+prompt_sequences:
+- id: ps-001
+  name: Content Production Pipeline
+  task_type: thought_leadership_content
+  complexity: medium
+  description: Six-stage sequential pipeline producing publish-ready Substack, LinkedIn, and X content with human approval
+    gate.
+  steps: 7
+  step_summary:
+  - Content Research Strategist researches topic and produces Research Strategy Document
+  - Business Blog Ghostwriter drafts article from research
+  - Business Fact-Checker verifies all claims
+  - Business Content Editor refines prose and structure
+  - Human approval gate (Ken reviews editorial package)
+  - SAEO Strategist optimizes for AI search visibility
+  - Content Adaptation Specialist adapts to platform formats
+  branching: false
+  source_file: prompts/sequences/content-production-pipeline.md
+  status: active
+- id: ps-002
+  name: Toptal AI Services Assessment Pipeline
+  task_type: automation_opportunity_assessment
+  complexity: medium
+  description: Six-persona supervisor-worker pipeline producing a ranked Top 10 Generative AI Automation Opportunities report.
+  steps: 6
+  step_summary:
+  - AI Services Operations Researcher produces MECE process inventory via OSINT
+  - LLM Agent Engineer assesses technical feasibility (parallel)
+  - Agentic Systems Architect evaluates governance requirements (parallel)
+  - Security & Risk Lead profiles risk and compliance (parallel)
+  - Value/ROI Lead constructs business cases (parallel)
+  - Report Author synthesizes into ranked Top 10 report
+  branching: false
+  source_file: prompts/sequences/toptal-ai-services-pipeline.md
+  status: active
