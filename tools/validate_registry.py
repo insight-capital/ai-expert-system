@@ -225,23 +225,16 @@ def check_domain_scope_overlaps(data: dict) -> CheckResult:
     the same cognitive_posture (which may indicate insufficient differentiation).
 
     Algorithm:
-      - For each pair of personas in the same persona_family, compute a naive
-        overlap score: number of domain_scope terms that share any word with the
-        other persona's domain_scope terms.
+      - For each pair of active personas, compute a naive overlap score: number
+        of domain_scope terms that share any word with the other persona's
+        domain_scope terms.
       - Emit a warning when overlap_ratio >= OVERLAP_THRESHOLD AND the two
         personas have identical cognitive_postures.
     """
     result = CheckResult("Domain scope overlaps between personas (overlap warnings)")
     OVERLAP_THRESHOLD = 0.5  # 50% of the smaller set's terms overlap
 
-    personas = data.get("personas", [])
-
-    # Build family membership lookup: persona_id -> family_name
-    family_map: dict[str, str] = {}
-    for family in data.get("persona_families", []):
-        fname = family.get("name", "")
-        for pid in family.get("ids", []):
-            family_map[pid] = fname
+    personas = [p for p in data.get("personas", []) if p.get("status") == "active"]
 
     def term_tokens(scope_list: list) -> set[str]:
         """Flatten domain_scope items into a bag of significant words."""
@@ -260,12 +253,6 @@ def check_domain_scope_overlaps(data: dict) -> CheckResult:
         for pb in personas[i + 1:]:
             pid_a = pa.get("id", "?")
             pid_b = pb.get("id", "?")
-
-            # Only compare personas in the same family
-            fam_a = family_map.get(pid_a)
-            fam_b = family_map.get(pid_b)
-            if not fam_a or fam_a != fam_b:
-                continue
 
             scope_a = term_tokens(pa.get("domain_scope", []))
             scope_b = term_tokens(pb.get("domain_scope", []))
@@ -296,7 +283,7 @@ def check_domain_scope_overlaps(data: dict) -> CheckResult:
                 )
 
     if warnings_emitted == 0:
-        result.info("No undifferentiated domain scope overlaps detected within families")
+        result.info("No undifferentiated domain scope overlaps detected")
     return result
 
 

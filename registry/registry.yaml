@@ -3,81 +3,10 @@ last_updated: '2026-03-01'
 methodology: LLM Expert Persona Development Framework v2.0
 owner: Ken Nguyen / Pan Industrial Platforms
 storage_location: Google Drive > /AI Persona System/registry/
-total_personas: 46
+total_personas: 52
 total_prompt_templates: 4
 total_prompt_sequences: 2
 total_knowledge_graphs: 0
-persona_families:
-- name: Dinner Briefing
-  ids:
-  - persona-001
-  - persona-002
-  - persona-003
-- name: Example Assessment
-  ids:
-  - persona-004
-  - persona-005
-  - persona-006
-  - persona-007
-  - persona-008
-  - persona-009
-- name: Meta
-  ids:
-  - persona-010
-  - persona-011
-- name: General AI Biz
-  ids:
-  - persona-012
-  - persona-013
-  - persona-014
-  - persona-015
-  - persona-016
-  - persona-017
-  - persona-018
-  - persona-049
-  - persona-050
-- name: Writing
-  ids:
-  - persona-019
-  - persona-020
-  - persona-021
-  - persona-022
-  - persona-023
-  - persona-024
-- name: Career Search
-  ids:
-  - persona-025
-  - persona-026
-  - persona-027
-- name: Legal
-  ids:
-  - persona-028
-  - persona-029
-  - persona-030
-  - persona-031
-  - persona-032
-  - persona-047
-  - persona-048
-- name: Valuation & Finance
-  ids:
-  - persona-033
-  - persona-034
-  - persona-035
-  - persona-036
-  - persona-044
-  - persona-045
-  - persona-046
-- name: Security & Engineering
-  ids:
-  - persona-037
-  - persona-038
-  - persona-039
-- name: M&A / Deal Execution
-  ids:
-  - persona-040
-  - persona-041
-  - persona-042
-  - persona-043
 personas:
 - id: persona-001
   name: Audience Relevance Analyst
@@ -2884,6 +2813,63 @@ personas:
   - ai-biz
   - leadership
   - strategy
+- id: persona-051
+  name: "IP Due Diligence & Valuation Counsel — Expert Persona Specification"
+  status: active
+  source_file: "personas/IP_Due_Diligence_Valuation_Counsel.md"
+  role_summary: ""
+  cognitive_posture: ""
+  domain_scope:
+    []
+  out_of_scope:
+    - The Senior Valuation Advisor (persona-034) produces enterprise-level valuation; this persona produces IP-specific valuation inputs that persona-034 consumes as a component of sum-of-the-parts or standalone IP value assessment
+    - "The Buy-Side M&A Advisor (persona-040) produces the target screening scorecard and deal thesis; this persona consumes those inputs to scope the IP diligence workstream"
+    - The AI / Emerging Technology Lawyer (persona-028) covers AI-specific IP questions (training data copyright, AI-generated inventions, open-source licensing for AI models)
+  input_spec:
+    accepts: []
+    required_fields: []
+  output_spec:
+    produces: ""
+    format: "structured_markdown"
+    fields: ["executive_summary", "ip_asset_inventory", "chain_of_title_assessment", "ip_risk_register", "open_source_and_third_party_dependency_assessment", "ip_valuation_analysis", "monetization_and_strategic_opportunities", "key_assumptions_and_limitations"]
+  composability:
+    works_with: ["persona-028", "persona-032", "persona-034", "persona-036", "persona-037", "persona-038", "persona-039", "persona-040", "persona-041", "persona-042", "persona-047", "persona-051"]
+    position_in_pipeline: "standalone"
+    known_workflows: []
+  voice_calibration: "uses_own_voice"
+  tags: ["finance"]
+
+- id: persona-052
+  name: "Strategic Valuation Positioning Advisor (SVPA-1.0)"
+  status: active
+  source_file: "personas/Strategic_Valuation_Positioning_Advisor.md"
+  role_summary: ""
+  cognitive_posture: ""
+  domain_scope:
+    []
+  out_of_scope:
+    - Detailed financial model construction → escalate to Financial Modeler
+    - Legal structuring / securities compliance → escalate to Legal Counsel
+    - Granular TAM/SAM/SOM analysis → escalate to Market Research Analyst
+    - Pitch deck visual design → escalate to Deck Designer
+    - Investor targeting / outreach → escalate to IR Lead
+    - Brand positioning for customer audiences → escalate to Brand Strategist
+    - "Knowledge gap (within scope): \"I don't have the NRR data needed"
+    - "Scope boundary (not my job): \"Building the DCF is outside my scope"
+  input_spec:
+    accepts: []
+    required_fields: []
+  output_spec:
+    produces: ""
+    format: "structured_markdown"
+    fields: []
+  composability:
+    works_with: []
+    position_in_pipeline: "standalone"
+    known_workflows: []
+  voice_calibration: "uses_own_voice"
+  tags: ["finance"]
+
 prompt_templates:
 - id: pt-001
   name: Persona Activation Brief

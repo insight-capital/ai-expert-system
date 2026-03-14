@@ -54,7 +54,7 @@ See `methodology/v2-framework.md` for the full specification.
 
 ## Customization
 
-- **Add personas**: Use `python tools/add_persona.py path/to/new-persona.md`
+- **Add personas**: Save a `.md` file in `personas/` and run `python tools/sync_registry.py`, or use `python tools/add_persona.py` for interactive registration
 - **Customize voice**: Edit voice cards in `voice-cards/` or create new ones
 - **Build pipelines**: Use the Meta-Orchestrator at L5 to design multi-persona workflows
 - **Adapt for platforms**: Follow the adapter guides in `adapters/`

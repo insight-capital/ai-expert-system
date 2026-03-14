@@ -78,52 +78,54 @@ When no existing asset in the Persona Registry or Prompt Library covers the task
 
 The following table is the authoritative routing reference for all personas in the system. Use this to match task characteristics to the optimal persona(s).
 
-| Persona ID | Role | Domain Scope | Pipeline Membership |
-|---|---|---|---|
-| **persona-004** | AI Services Operations Researcher | Outside-in process discovery, operational mapping, OSINT-grade business analysis | Example Assessment Pipeline (Stage 1) |
-| **persona-005** | LLM Agent Engineer | Agent architecture design, LLM integration patterns, tool-use orchestration | Example Assessment Pipeline (Stage 2) |
-| **persona-006** | Agentic Systems Architect | Governance, autonomy classification, orchestration topology, multi-agent system design | Example Assessment Pipeline (Stage 2) |
-| **persona-007** | Security & Risk Lead | Security risk assessment, data privacy, regulatory compliance, threat modeling for AI systems | Example Assessment Pipeline (Stage 2) |
-| **persona-008** | Value/ROI Lead | Financial modeling, ROI analysis, business case construction, automation value quantification | Example Assessment Pipeline (Stage 2) |
-| **persona-009** | Report Author & Editorial Director | Executive report synthesis, editorial judgment, narrative architecture, multi-source integration | Example Assessment Pipeline (Stage 3) |
-| **persona-010** | Multi-Agent Orchestration Architect | Pipeline orchestration engineering, agent coordination protocols, state management, error recovery | Meta / System Infrastructure |
-| **persona-011** | Prompt Architecture Strategist | Complex prompt architecture: branching, loops, parallel execution, dynamic context, error handling | Meta / System Infrastructure |
-| **persona-012** | AI CTO | Technical strategy, architecture decisions, build-vs-buy, engineering organization design | General AI Business |
-| **persona-013** | AI Strategy & GTM Lead | Go-to-market strategy, competitive positioning, market analysis, pricing strategy for AI products | General AI Business |
-| **persona-014** | AI Product PM | Product roadmap, feature prioritization, user research, cross-functional coordination for AI products | General AI Business |
-| **persona-015** | AI/ML Forward-Deployed Engineer | Hands-on AI/ML implementation, model deployment, technical customer success, integration engineering | General AI Business |
-| **persona-016** | Forward-Deployed Engineer Generalist | Full-stack implementation, rapid prototyping, customer-facing technical delivery, systems integration | General AI Business |
-| **persona-017** | AI-Augmented Productivity Lead | Workflow automation, productivity systems design, AI tool integration, organizational change management | General AI Business |
-| **persona-018** | Data Strategy Lead | Data architecture, data governance, analytics strategy, data pipeline design, data quality frameworks | General AI Business |
-| **persona-019** | Content Research Strategist | Topic research, source identification, trend analysis, content gap analysis, competitive content audit | Content Pipeline (Stage 1) |
-| **persona-020** | Business Blog Ghostwriter | Long-form business writing, thought leadership drafting, voice matching, narrative construction | Content Pipeline (Stage 2) |
-| **persona-021** | Business Fact-Checker | Claim verification, source validation, statistical accuracy, citation management | Content Pipeline (Stage 3) |
-| **persona-022** | Business Content Editor | Structural editing, line editing, consistency enforcement, publication readiness assessment | Content Pipeline (Stage 4) |
-| **persona-023** | SAEO Strategist | Search and AI Engine Optimization, discoverability, structured data, content distribution strategy | Content Pipeline (Stage 5) |
-| **persona-024** | Content Adaptation Specialist | Cross-platform content adaptation (Substack, LinkedIn, X), format optimization, audience-specific reframing | Content Pipeline (Stage 6) |
-| **persona-028** | AI / Emerging Technology Lawyer | AI/ML Law and Regulation; Data Use and Privacy; Intellectual Property | Legal / Standalone |
-| **persona-029** | Commercial Contracts Lawyer | SaaS and Technology Licensing; Venture Studio Operating and JV Agreements; IP Licensing and Assignments | Legal / Standalone |
-| **persona-030** | Corporate Counsel | Delaware C-Corp formation for venture-backed startups (standard path for institutional capital); Delaware LLC formation and operating agreements for holding companies, SPVs, and venture studios; Multi-entity structures: parent holdco, operating subsidiaries, IP holdco configurations | Legal / Standalone |
-| **persona-031** | Corporate Dissolution & Wind-Down Counsel | State Corporate Dissolution Law; Certificate of Dissolution Mechanics; Creditor Claims Procedures | Legal / Standalone |
-| **persona-032** | Tax Attorney | Entity Structuring; Cross-Border / International; Fund & Carry Structuring | Legal / Standalone |
-| **persona-033** | Meridian -- Web3 Valuation & Digital Assets Advisor | Construction and maintenance of crypto-exposed public company comp sets: miners (MARA, RIOT, CLSK, BITF, IREN), exchanges (COIN, crypto segments of CME, CBOE), infrastructure (GLXY, MSTR strategy analysis, custodians), stablecoin issuers (post-IPO comps); Relevant multiples: EV/Revenue, EV/EBITDA, EV/Active Users, P/E, Price/Book (for balance-sheet-heavy models like miners and MSTR), EV/Hash Rate (mining-specific), EV/AUC (exchange/custodian-specific); Normalization techniques for crypto cyclicality: through-cycle averaging, peak/trough bracketing, BTC-price-adjusted revenue normalization | Valuation & Finance / Standalone |
-| **persona-034** | Senior Valuation & Corporate Finance Advisor | Private Market / Venture-Stage Methods; Public Market Methods; Transaction-Specific Methods | Valuation & Finance / Standalone |
-| **persona-035** | Strategic Valuation Positioning Advisor | Deep fluency in valuation methodologies: DCF, comparable company analysis, precedent transactions, LBO analysis, sum-of-the-parts, and venture-stage frameworks (pre-money/post-money, milestone-based, scorecard, Berkus); Expertise in multiple expansion mechanics: what drives a company from 4x to 12x revenue without a growth rate change — shift in perceived business model, market category, margin trajectory, or revenue quality; Revenue quality analysis: recurring vs | Valuation & Finance / Standalone |
-| **persona-036** | Strategic Finance & Unit Economics Diligence Lead | SaaS metrics: ARR/MRR construction, net revenue retention, logo retention, expansion revenue mechanics, contraction and churn decomposition; Marketplace and platform economics: take rates, GMV-to-revenue conversion, liquidity dynamics, supply/demand balance metrics; Services revenue: utilization-based models, blended rate analysis, revenue per headcount, project vs | Valuation & Finance / Standalone |
-| **persona-037** | Principal Engineer -- Code Auditor | Code audits, root-cause analysis, remediation planning; Python/TypeScript/Solidity/Cloud/DB | Security & Engineering / Standalone |
-| **persona-038** | Principal Security Consultant | Penetration testing, security architecture review, adversarial simulation; Web/Network/Cloud/Red Team | Security & Engineering / Standalone |
-| **persona-039** | Cybersecurity Vulnerability Advisor | Application Security; Infrastructure & Cloud; Compliance Frameworks | Security & Engineering / Standalone |
-| **persona-040** | Buy-Side M&A Advisor | Buy-Side M&A Advisor | M&A / Deal Execution / Standalone |
-| **persona-041** | Post-Merger Integration Lead | Day 1 Readiness; First 100 Days; Steady-State Transition | M&A / Deal Execution / Standalone |
-| **persona-042** | Insurance Risk Advisor | Insurance Risk Advisor | M&A / Deal Execution / Standalone |
-| **persona-043** | M&A Data Integration Engineer | M&A Data Integration Engineer | M&A / Deal Execution / Standalone |
-| **persona-044** | Debt & Capital Markets Advisor | Full capital structure design: senior secured (revolver, TLA, TLB), second lien, mezzanine, unitranche, holdco debt, seller notes, earnout financing, preferred equity with debt-like features; Tranche-level sizing: revolver sizing based on working capital seasonality and peak borrowing needs; term loan sizing based on leverage capacity, amortization tolerance, and cash flow sweep mechanics; Structural subordination vs | Valuation & Finance / Standalone |
-| **persona-045** | Senior Transaction Services Advisor (Quality of Earnings) | Full bridge construction methodology: reported net income → add-back interest, taxes, D&A → reported EBITDA → management adjustments → buyer adjustments → pro forma adjustments → run-rate LTM EBITDA; Adjustment taxonomy: non-recurring vs; Common manipulation patterns: add-back stacking (layering 15–25% of adjustments onto a clean EBITDA number), one-time items that recur annually, run-rate assumptions based on a single month's performance, related-party transactions at below-market rates, capitalization of expenses that should flow through P&L | Valuation & Finance / Standalone |
-| **persona-046** | Capital Markets & Strategic Transactions Advisor | Capital Markets & Strategic Transactions Advisor | Valuation & Finance / Standalone |
-| **persona-047** | M&A Legal Counsel | Drafting and negotiating asset purchase agreements, stock purchase agreements, merger agreements (forward triangular, reverse triangular, direct), and equity interest purchase agreements; Purchase price mechanics: fixed price, locked-box, closing-date balance sheet adjustments, working capital true-ups, earnouts (revenue-based, EBITDA-based, milestone-based), seller notes, equity rollovers; Representations and warranties: drafting, negotiating, and calibrating scope, materiality qualifiers, Material Adverse Effect definitions, knowledge qualifiers, pro-sandbagging vs | Legal / Standalone |
-| **persona-048** | Regulatory & Licensing Specialist | HSR/antitrust filing requirements and thresholds (FTC/DOJ); CFIUS review process for foreign investment in U; FCC licensing and transfer-of-control procedures (broadcast, spectrum, telecom) | Legal / Standalone |
-| **persona-049** | Applied AI Engineering Lead | Applied AI Engineering Lead | General AI Biz / Standalone |
-| **persona-050** | Go-to-Market Strategy Lead | Market Segmentation & Targeting; Buyer Persona & Buying Journey Analysis; Value Proposition & Positioning | General AI Biz / Standalone |
+| Persona ID | Role | Domain Scope |
+|---|---|---|
+| **persona-004** | AI Services Operations Researcher | Outside-in process discovery, operational mapping, OSINT-grade business analysis |
+| **persona-005** | LLM Agent Engineer | Agent architecture design, LLM integration patterns, tool-use orchestration |
+| **persona-006** | Agentic Systems Architect | Governance, autonomy classification, orchestration topology, multi-agent system design |
+| **persona-007** | Security & Risk Lead | Security risk assessment, data privacy, regulatory compliance, threat modeling for AI systems |
+| **persona-008** | Value/ROI Lead | Financial modeling, ROI analysis, business case construction, automation value quantification |
+| **persona-009** | Report Author & Editorial Director | Executive report synthesis, editorial judgment, narrative architecture, multi-source integration |
+| **persona-010** | Multi-Agent Orchestration Architect | Pipeline orchestration engineering, agent coordination protocols, state management, error recovery |
+| **persona-011** | Prompt Architecture Strategist | Complex prompt architecture: branching, loops, parallel execution, dynamic context, error handling |
+| **persona-012** | AI CTO | Technical strategy, architecture decisions, build-vs-buy, engineering organization design |
+| **persona-013** | AI Strategy & GTM Lead | Go-to-market strategy, competitive positioning, market analysis, pricing strategy for AI products |
+| **persona-014** | AI Product PM | Product roadmap, feature prioritization, user research, cross-functional coordination for AI products |
+| **persona-015** | AI/ML Forward-Deployed Engineer | Hands-on AI/ML implementation, model deployment, technical customer success, integration engineering |
+| **persona-016** | Forward-Deployed Engineer Generalist | Full-stack implementation, rapid prototyping, customer-facing technical delivery, systems integration |
+| **persona-017** | AI-Augmented Productivity Lead | Workflow automation, productivity systems design, AI tool integration, organizational change management |
+| **persona-018** | Data Strategy Lead | Data architecture, data governance, analytics strategy, data pipeline design, data quality frameworks |
+| **persona-019** | Content Research Strategist | Topic research, source identification, trend analysis, content gap analysis, competitive content audit |
+| **persona-020** | Business Blog Ghostwriter | Long-form business writing, thought leadership drafting, voice matching, narrative construction |
+| **persona-021** | Business Fact-Checker | Claim verification, source validation, statistical accuracy, citation management |
+| **persona-022** | Business Content Editor | Structural editing, line editing, consistency enforcement, publication readiness assessment |
+| **persona-023** | SAEO Strategist | Search and AI Engine Optimization, discoverability, structured data, content distribution strategy |
+| **persona-024** | Content Adaptation Specialist | Cross-platform content adaptation (Substack, LinkedIn, X), format optimization, audience-specific reframing |
+| **persona-028** | AI / Emerging Technology Lawyer | AI/ML Law and Regulation; Data Use and Privacy; Intellectual Property |
+| **persona-029** | Commercial Contracts Lawyer | SaaS and Technology Licensing; Venture Studio Operating and JV Agreements; IP Licensing and Assignments |
+| **persona-030** | Corporate Counsel | Delaware C-Corp formation for venture-backed startups (standard path for institutional capital); Delaware LLC formation and operating agreements for holding companies, SPVs, and venture studios; Multi-entity structures: parent holdco, operating subsidiaries, IP holdco configurations |
+| **persona-031** | Corporate Dissolution & Wind-Down Counsel | State Corporate Dissolution Law; Certificate of Dissolution Mechanics; Creditor Claims Procedures |
+| **persona-032** | Tax Attorney | Entity Structuring; Cross-Border / International; Fund & Carry Structuring |
+| **persona-033** | Meridian -- Web3 Valuation & Digital Assets Advisor | Construction and maintenance of crypto-exposed public company comp sets: miners (MARA, RIOT, CLSK, BITF, IREN), exchanges (COIN, crypto segments of CME, CBOE), infrastructure (GLXY, MSTR strategy analysis, custodians), stablecoin issuers (post-IPO comps); Relevant multiples: EV/Revenue, EV/EBITDA, EV/Active Users, P/E, Price/Book (for balance-sheet-heavy models like miners and MSTR), EV/Hash Rate (mining-specific), EV/AUC (exchange/custodian-specific); Normalization techniques for crypto cyclicality: through-cycle averaging, peak/trough bracketing, BTC-price-adjusted revenue normalization |
+| **persona-034** | Senior Valuation & Corporate Finance Advisor | Private Market / Venture-Stage Methods; Public Market Methods; Transaction-Specific Methods |
+| **persona-035** | Strategic Valuation Positioning Advisor | Deep fluency in valuation methodologies: DCF, comparable company analysis, precedent transactions, LBO analysis, sum-of-the-parts, and venture-stage frameworks (pre-money/post-money, milestone-based, scorecard, Berkus); Expertise in multiple expansion mechanics: what drives a company from 4x to 12x revenue without a growth rate change — shift in perceived business model, market category, margin trajectory, or revenue quality; Revenue quality analysis: recurring vs |
+| **persona-036** | Strategic Finance & Unit Economics Diligence Lead | SaaS metrics: ARR/MRR construction, net revenue retention, logo retention, expansion revenue mechanics, contraction and churn decomposition; Marketplace and platform economics: take rates, GMV-to-revenue conversion, liquidity dynamics, supply/demand balance metrics; Services revenue: utilization-based models, blended rate analysis, revenue per headcount, project vs |
+| **persona-037** | Principal Engineer -- Code Auditor | Code audits, root-cause analysis, remediation planning; Python/TypeScript/Solidity/Cloud/DB |
+| **persona-038** | Principal Security Consultant | Penetration testing, security architecture review, adversarial simulation; Web/Network/Cloud/Red Team |
+| **persona-039** | Cybersecurity Vulnerability Advisor | Application Security; Infrastructure & Cloud; Compliance Frameworks |
+| **persona-040** | Buy-Side M&A Advisor | Buy-Side M&A Advisor |
+| **persona-041** | Post-Merger Integration Lead | Day 1 Readiness; First 100 Days; Steady-State Transition |
+| **persona-042** | Insurance Risk Advisor | Insurance Risk Advisor |
+| **persona-043** | M&A Data Integration Engineer | M&A Data Integration Engineer |
+| **persona-044** | Debt & Capital Markets Advisor | Full capital structure design: senior secured (revolver, TLA, TLB), second lien, mezzanine, unitranche, holdco debt, seller notes, earnout financing, preferred equity with debt-like features; Tranche-level sizing: revolver sizing based on working capital seasonality and peak borrowing needs; term loan sizing based on leverage capacity, amortization tolerance, and cash flow sweep mechanics; Structural subordination vs |
+| **persona-045** | Senior Transaction Services Advisor (Quality of Earnings) | Full bridge construction methodology: reported net income → add-back interest, taxes, D&A → reported EBITDA → management adjustments → buyer adjustments → pro forma adjustments → run-rate LTM EBITDA; Adjustment taxonomy: non-recurring vs; Common manipulation patterns: add-back stacking (layering 15–25% of adjustments onto a clean EBITDA number), one-time items that recur annually, run-rate assumptions based on a single month's performance, related-party transactions at below-market rates, capitalization of expenses that should flow through P&L |
+| **persona-046** | Capital Markets & Strategic Transactions Advisor | Capital Markets & Strategic Transactions Advisor |
+| **persona-047** | M&A Legal Counsel | Drafting and negotiating asset purchase agreements, stock purchase agreements, merger agreements (forward triangular, reverse triangular, direct), and equity interest purchase agreements; Purchase price mechanics: fixed price, locked-box, closing-date balance sheet adjustments, working capital true-ups, earnouts (revenue-based, EBITDA-based, milestone-based), seller notes, equity rollovers; Representations and warranties: drafting, negotiating, and calibrating scope, materiality qualifiers, Material Adverse Effect definitions, knowledge qualifiers, pro-sandbagging vs |
+| **persona-048** | Regulatory & Licensing Specialist | HSR/antitrust filing requirements and thresholds (FTC/DOJ); CFIUS review process for foreign investment in U; FCC licensing and transfer-of-control procedures (broadcast, spectrum, telecom) |
+| **persona-049** | Applied AI Engineering Lead | Applied AI Engineering Lead |
+| **persona-050** | Go-to-Market Strategy Lead | Market Segmentation & Targeting; Buyer Persona & Buying Journey Analysis; Value Proposition & Positioning |
+| **persona-051** | IP Due Diligence & Valuation Counsel — Expert Persona Specification | IP Due Diligence & Valuation Counsel — Expert Persona Specification |
+| **persona-052** | Strategic Valuation Positioning Advisor (SVPA-1.0) | Strategic Valuation Positioning Advisor (SVPA-1.0) |
 
 ### Known Validated Workflows
 
@@ -744,6 +746,23 @@ RECOMMENDED REGISTRY UPDATE:
 - Priority: Develop if fundraising tasks are recurring; otherwise, an L2 prompt
   sequence with financial modeling instructions may suffice for a one-time need.
 ```
+
+### L6 Auto-Creation Protocol
+
+After producing an L6 gap diagnosis, if running in an environment with file system access (e.g., Claude Code), offer to create the missing persona:
+
+"I've identified a capability gap. Would you like me to create this persona now?"
+
+If user confirms:
+1. Read the v2 framework: `methodology/v2-framework.md`
+2. Read 1-2 existing personas from `personas/` as format examples
+3. Using the gap diagnosis as the design input, generate the complete persona following the Five-Part Structural Framework. Assume the persona operates both standalone and in multi-agent workflows. Include full interface contracts.
+4. Self-score against PDSQI-9+ (all >= 4.5). Revise if any fall short.
+5. Derive kebab-case filename, write to `personas/{filename}.md`
+6. Run `python tools/sync_registry.py` from the repo root
+7. Report: persona ID assigned, file path, fields flagged for review
+
+If user declines: output the gap diagnosis and draft specification only.
 
 ---
 
