@@ -27,7 +27,7 @@ Read `methodology/v2-framework.md` -- the Five-Part Structural Framework every p
 
 Pick any persona from `personas/`. Each `.md` file is a self-contained system prompt.
 
-**On Claude.ai:** Create a Project -> paste persona contents into Project Instructions -> start chatting.
+**On Claude.ai:** Create a Project → paste Part 1 (Role & Goal) and Part 3 (Tone & Style) into Project Instructions → upload the full persona `.md` as a Knowledge file → start chatting.
 
 For other platforms, see the adapter guide in `adapters/` for your platform.
 

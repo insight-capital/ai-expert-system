@@ -1,15 +1,16 @@
 # Claude.ai Project Adapter
 
-Deploy AI Persona System personas inside Claude.ai Projects — either as a persistent expert workspace or as a multi-stage pipeline running inside a single Project.
+Deploy AI Persona System personas inside Claude.ai Projects as persistent expert workspaces.
 
 ---
 
 ## Quick Start
 
 1. Go to [claude.ai](https://claude.ai) and click **Create project**
-2. In **Project instructions**, paste the full contents of your chosen persona `.md` file
-3. Upload any relevant data files to the Project's knowledge base
-4. Start chatting — the persona is active for every conversation in that Project
+2. In **Project Instructions**, paste **Part 1 (Role & Goal Definition)** and **Part 3 (Tone & Style Architecture)** from your chosen persona `.md` file
+3. Upload the **full persona `.md` file** to Project Knowledge
+4. Upload any additional relevant data files to Knowledge
+5. Start chatting — the persona is active for every conversation in that Project
 
 ---
 
@@ -25,7 +26,7 @@ This maps cleanly to the AI Persona System because each persona `.md` file is al
 
 ---
 
-## Pattern 1: Full Persona as System Prompt + Knowledge Files
+## Pattern 1: Split Persona — Identity in Instructions, Full File in Knowledge
 
 **Use when:** You want a dedicated expert workspace — one domain, one persona, sustained over multiple conversations.
 
@@ -40,16 +41,19 @@ This maps cleanly to the AI Persona System because each persona `.md` file is al
 
 2. Name the project to match the persona (e.g., "AI CTO", "Data Strategy Lead")
 
-3. Click **Edit project instructions** and paste the full contents of the persona file:
-   - For `ai-cto.md`: paste the full file (~3,000–8,000 tokens typical)
-   - The entire file is valid as instructions — Role & Goal, Cognitive Posture, Constraints, Interface Contract, Knowledge Base, Golden Samples all load as system context
+3. Click **Edit project instructions** and paste the **identity block** from the persona file:
+   - **Part 1: Role & Goal Definition** — identity, objectives, cognitive posture, role boundaries
+   - **Part 3: Tone & Style Architecture** — voice, tone, output format defaults
+   - This keeps the core identity always in the system prompt (~25–40% of the full file, typically fits within the ~8K character instruction limit)
 
-4. Upload supporting files to **Project knowledge:**
+4. Upload to **Project Knowledge:**
+   - The **full persona `.md` file** (Parts 1–5 — Claude retrieves detailed knowledge, constraints, and golden samples as needed)
    - Relevant domain data (architecture diagrams as text, RFCs, prior assessments)
-   - The persona file itself (as a backup reference)
    - Any companion tools or frameworks referenced in the persona
 
 5. Start a conversation — the persona activates immediately on the first message
+
+> **Note:** If the persona is small enough to fit entirely within the instruction limit (<8K characters), you can paste the entire file into Instructions instead of splitting.
 
 **Interaction pattern — single-persona workspace:**
 ```
@@ -70,78 +74,11 @@ You: What's your recommended migration path to short-lived tokens?
 
 ---
 
-## Pattern 2: Pipeline Setup — Orchestration as System Prompt
-
-**Use when:** You want to run a multi-stage pipeline (content production, assessment report, research synthesis) inside a single Project, with Claude managing stage handoffs.
-
-**Example use cases:**
-- Content production pipeline (Strategist → Researcher → Writer → Editor → Fact-Checker)
-- Example Assessment assessment pipeline (OSINT → 4x parallel specialist analysis → Report)
-- Dinner briefing pipeline (Analyst → Gatekeeper → Narrator)
-
-**Steps:**
-
-1. Create a Claude.ai Project named after the pipeline (e.g., "Content Production Pipeline")
-
-2. In **Project instructions**, paste the pipeline orchestration document:
-   - Use `prompts/sequences/content-production-pipeline.md` or `assessment-pipeline.md`
-   - Or write a lightweight orchestration prompt (see template below)
-
-3. Upload all relevant persona files as **Project knowledge:**
-   - Upload each persona `.md` that participates in the pipeline
-   - Upload `registry/registry.yaml` so Claude can reference persona IDs and capabilities
-   - Upload any domain-specific context files (author config, client brief, etc.)
-
-4. Provide the task brief and let the pipeline run:
-
-**Lightweight orchestration prompt template (for Project instructions):**
-```
-You are running a multi-stage content production pipeline.
-The pipeline stages and their persona definitions are in the uploaded knowledge files.
-
-Stages:
-1. Content Research Strategist (persona-019) — research and angle development
-2. Business Blog Ghostwriter (persona-020) — draft production
-3. Business Content Fact-Checker (persona-021) — accuracy verification
-4. Business Content Editor (persona-022) — final polish
-
-When the user provides a topic brief:
-- Run each stage sequentially
-- Show stage output before proceeding
-- Ask for confirmation before advancing if the user says "pause between stages"
-- Deliver the final formatted output after Stage 4
-
-Knowledge files available: content-research-strategist.md, business-blog-ghostwriter.md,
-business-fact-checker.md, business-content-editor.md, registry.yaml
-```
-
-**Interaction pattern — pipeline execution:**
-```
-You: Topic: "How AI agents are replacing business analysts in 2026"
-     Audience: Mid-market operations leaders
-     Length: 1,200 words, Substack format
-     Run full pipeline.
-
-[Claude runs Stage 1 as Content Research Strategist]
-[Outputs research brief with angles, sources, key claims]
-[Transitions to Stage 2 as Ghostwriter]
-[Produces draft]
-[Continues through Fact-Checker and Editor]
-[Delivers formatted final output]
-```
-
-**Best for:**
-- Content production where you want consistent pipeline execution
-- Assessment pipelines with defined stage gates
-- Teams that want to run the same pipeline repeatedly with different inputs
-
----
-
-## Pattern 3: Export-Based Deployment — Meta-Orchestrator as Task Router
+## Pattern 2: Export-Based Deployment — Meta-Orchestrator as Task Router
 
 **Use when:** You want a persistent Task Router project powered by the full meta-orchestrator, with easy updates when personas change.
 
-**Why not Pattern 1?** The meta-orchestrator is ~55KB. Pasting it into Project Instructions works, but you must re-paste the entire file every time a persona is added or removed. Pattern 3 splits this into a stable loader prompt (pasted once) and a knowledge file (drag-and-drop to update).
+**Why not Pattern 1?** The meta-orchestrator is ~55KB. Pasting it into Project Instructions works, but you must re-paste the entire file every time a persona is added or removed. Pattern 2 splits this into a stable loader prompt (pasted once) and a knowledge file (drag-and-drop to update).
 
 **Setup (one time):**
 
@@ -192,37 +129,21 @@ python tools/export_claude_project.py --check
 
 ---
 
+
 ## Context Window Management
 
-The ~200K token limit is generous but not unlimited. Budget tokens carefully when loading multiple persona files:
+The ~200K token limit is generous but not unlimited. Budget tokens carefully:
 
 | Component | Approximate Token Cost | Priority |
 |---|---|---|
-| Single persona `.md` file | 3,000–8,000 tokens | High — core behavior |
-| Registry YAML (all 24 personas) | ~6,000 tokens | Medium — useful for routing |
+| Identity block (Part 1 + Part 3) in Instructions | 1,500–3,000 tokens | High — core behavior, always in context |
+| Full persona `.md` in Knowledge | 3,000–8,000 tokens | High — retrieved as needed |
 | Supporting domain files | Varies | Medium — load only what's needed |
-| Pipeline sequence doc | 2,000–4,000 tokens | High if running pipeline |
 | Conversation history | Grows with each message | Monitor in long sessions |
 
-**For single-persona projects:** No concern. One persona file + a few data files leaves 180K+ tokens free for conversation.
+**For single-persona projects:** No concern. The identity block in Instructions + the full persona in Knowledge + a few data files leaves 180K+ tokens free for conversation.
 
-**For pipeline projects:** Load only the personas that participate in the pipeline. Omit families not in use (e.g., skip all Content Briefing personas when running a content pipeline).
-
-**For knowledge-heavy projects:** Upload large reference documents as Project knowledge files (they are indexed and retrieved selectively) rather than pasting them into instructions.
-
----
-
-## Persona Family to Project Mapping
-
-Suggested Project configurations by use case:
-
-| Project Name | Personas to Load | Pipeline Sequence |
-|---|---|---|
-| Example AI Assessment | persona-004, 005, 006, 007, 008, 009 | ps-002 |
-| AI Strategy Advisory | persona-012, 013, 014 | None (single session) |
-| Content Production | persona-019, 020, 021, 022, 024 | Content pipeline |
-| Technical Architecture | persona-006, 010, 012, 015 | Review sequence |
-| Security & Risk Review | persona-007, 006, 012 | Review sequence |
+**For knowledge-heavy projects:** Upload large reference documents as Project Knowledge files (they are indexed and retrieved selectively) rather than pasting them into Instructions.
 
 ---
 
@@ -239,10 +160,10 @@ This is useful for deploying a `security-risk-lead` or `ai-cto` persona to an en
 
 ## Limitations
 
-- **System prompt size:** Claude.ai Projects do not publish a hard limit on instruction length, but very large instruction blocks (>20K tokens) may affect response quality. For unusually large personas, prioritize the Role & Goal, Cognitive Posture, Constraints, and Interface Contract sections; trim Golden Samples if needed.
+- **System prompt size:** Claude.ai has an ~8K character limit on Project Instructions. The split approach (identity block in Instructions, full file in Knowledge) solves this for all but the most extreme personas. If the identity block alone exceeds the limit, trim Part 3 formatting examples first.
 - **No dynamic persona switching:** A Project has one instruction set. To switch personas, create a separate Project or manually edit instructions. There is no `/switch-persona` mechanism inside a Project conversation.
 - **Knowledge is not real-time:** Uploaded files are indexed at upload time. If you update a persona `.md`, re-upload the file to the Project.
-- **No code execution:** Unlike Claude Code, Claude.ai Projects cannot run scripts, read local files, or execute shell commands. Pipeline outputs are text only — no automated file writes.
+- **No code execution:** Unlike Claude Code, Claude.ai Projects cannot run scripts, read local files, or execute shell commands. Outputs are text only — no automated file writes.
 - **Conversation isolation:** Conversations within a Project share instructions and knowledge but not each other's history. Claude in Conversation B does not remember what was said in Conversation A.
 - **Pipeline state is manual:** For multi-stage pipelines, Claude tracks state within a single conversation. If you close the conversation mid-pipeline, you must provide context to resume in a new conversation.
-- **No registry auto-routing:** Claude.ai Projects have no awareness of the registry YAML unless you upload it. Even with the registry uploaded, routing decisions must be prompted explicitly — there is no automatic orchestrator behavior.
+- **No automatic routing:** Claude.ai Projects do not automatically route tasks to different personas. Routing decisions must be prompted explicitly.
