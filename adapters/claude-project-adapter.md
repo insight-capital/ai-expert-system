@@ -1,4 +1,4 @@
-# Claude.ai Project Adapter
+# Claude Adapter
 
 Deploy AI Persona System personas inside Claude.ai Projects as persistent expert workspaces.
 
@@ -74,76 +74,44 @@ You: What's your recommended migration path to short-lived tokens?
 
 ---
 
-## Pattern 2: Export-Based Deployment — Meta-Orchestrator as Task Router
+## Pattern 2: Meta-Orchestrator as Task Router
 
-**Use when:** You want a persistent Task Router project powered by the full meta-orchestrator, with easy updates when personas change.
+**Use when:** You want a persistent Task Router project powered by the full meta-orchestrator, have multiple personas in your registry, and want easy updates when personas change.
 
-**Why not Pattern 1?** The meta-orchestrator is ~55KB. Pasting it into Project Instructions works, but you must re-paste the entire file every time a persona is added or removed. Pattern 2 splits this into a stable loader prompt (pasted once) and a knowledge file (drag-and-drop to update).
+**Steps:**
 
-**Setup (one time):**
+1. Create a Claude.ai Project named "Task Router"
 
-1. Generate export files:
-   ```bash
-   python tools/export_claude_project.py
-   ```
+2. Paste the following into **Project Instructions:**
 
-2. Create a Claude.ai Project named "Task Router"
+   > You are the **Task Resolution Strategist (Meta-Orchestrator)** for the AI Persona System.
+   >
+   > Your full persona definition — including your identity, decision hierarchy, routing table, golden samples, interface contract, and constraints — is provided in the uploaded knowledge file named `meta-orchestrator.md`.
+   >
+   > **On every conversation start:**
+   > 1. Internalize the knowledge file as your system prompt.
+   > 2. Operate exactly as specified: diagnose tasks, classify resolution levels (L1–L6), route to the optimal persona or prompt, and produce actionable output per the interface contract.
+   > 3. Never fabricate persona capabilities — only route to personas listed in the routing table.
+   >
+   > **If the user asks "how many personas are in the system?" or similar:**
+   > - Answer from the routing table in the knowledge file (count the rows).
+   > - Do not guess or use a memorized number.
+   >
+   > For L6 (Gap Identification) tasks requiring new persona development, reference the uploaded `v2-framework.md` knowledge file — it contains the complete Five-Part Structural Framework (Sections 3.1–3.6), validation rubrics (PDSQI-9, Section 8), and the Master Instantiation Directive.
+   >
+   > You are the front door. Every task flows through you first.
 
-3. Paste the contents of `exports/claude-project/project-instructions.md` into **Project Instructions** (~500 tokens, stable — you won't need to change this again)
+3. Upload to **Project Knowledge:**
+   - `master-expert/meta-orchestrator.md` — the full persona with routing table
+   - `methodology/v2-framework.md` — enables L6 persona creation
+   - Each persona `.md` file you want the Meta-Orchestrator to reference when routing
 
-4. Upload `exports/claude-project/meta-orchestrator-knowledge.md` as a **Project Knowledge** file
-
-**Updating after persona changes:**
-
-```bash
-# 1. Add persona (existing workflow)
-python tools/add_persona.py path/to/new-persona.md
-#    → prints: "Claude.ai project knowledge file is now stale"
-
-# 2. Re-export
-python tools/export_claude_project.py
-
-# 3. In Claude.ai Task Router project:
-#    → Delete old meta-orchestrator-knowledge.md from Knowledge
-#    → Upload the new one (drag-and-drop, ~10 seconds)
-```
-
-**Checking for drift:**
-```bash
-python tools/export_claude_project.py --check
-# OK: Up to date (39 personas, 9 families).
-# — or —
-# STALE: Content has changed since last export (39 personas, was 27 at last export).
-```
-
-**How it works:**
-- The loader prompt tells Claude to treat the knowledge file as its system prompt
-- The knowledge file is the full meta-orchestrator with stale hardcoded counts patched to current values
-- A manifest (`export-manifest.json`) tracks content hashes for drift detection
-- `add_persona.py` automatically reminds you to re-export after registration
+**Updating after persona changes:** When you add or modify personas, the routing table in `meta-orchestrator.md` updates automatically (via `sync_registry.py`). Re-upload the updated file to your Task Router project to pick up the changes.
 
 **Best for:**
-- The "Task Router" project that uses the full meta-orchestrator
-- Any deployment where the persona file is large and changes frequently
-- Minimizing manual copy-paste overhead
-
----
-
-
-## Context Window Management
-
-The ~200K token limit is generous but not unlimited. Budget tokens carefully:
-
-| Component | Approximate Token Cost | Priority |
-|---|---|---|
-| Identity block (Part 1 + Part 3) in Instructions | 1,500–3,000 tokens | High — core behavior, always in context |
-| Full persona `.md` in Knowledge | 3,000–8,000 tokens | High — retrieved as needed |
-| Supporting domain files | Varies | Medium — load only what's needed |
-| Conversation history | Grows with each message | Monitor in long sessions |
-
-**For single-persona projects:** No concern. The identity block in Instructions + the full persona in Knowledge + a few data files leaves 180K+ tokens free for conversation.
-
-**For knowledge-heavy projects:** Upload large reference documents as Project Knowledge files (they are indexed and retrieved selectively) rather than pasting them into Instructions.
+- Routing all tasks through a single intelligent entry point
+- Teams with many personas who want consistent task classification
+- Projects where the persona set changes over time
 
 ---
 
@@ -154,16 +122,21 @@ Claude.ai Projects can be shared with collaborators (on Team/Enterprise plans):
 - All members see the same instructions and knowledge
 - Each member's conversations are private within the shared Project
 
-This is useful for deploying a `security-risk-lead` or `ai-cto` persona to an entire team without each member managing their own persona files.
-
 ---
 
-## Limitations
+## Limitations & Notes
+
+**Context window:** The ~200K token limit is generous. A single persona identity block (1,500–3,000 tokens) + the full persona in Knowledge (3,000–8,000 tokens) + supporting files leaves 180K+ tokens free. For knowledge-heavy projects, upload large reference documents as Knowledge files (indexed and retrieved selectively) rather than pasting into Instructions.
 
 - **System prompt size:** Claude.ai has an ~8K character limit on Project Instructions. The split approach (identity block in Instructions, full file in Knowledge) solves this for all but the most extreme personas. If the identity block alone exceeds the limit, trim Part 3 formatting examples first.
-- **No dynamic persona switching:** A Project has one instruction set. To switch personas, create a separate Project or manually edit instructions. There is no `/switch-persona` mechanism inside a Project conversation.
+- **Persona switching:** Single-persona Projects (Pattern 1) have one instruction set — to switch personas, create a separate Project or edit instructions. The Task Router (Pattern 2) effectively switches between personas within a conversation by routing tasks to different persona definitions in Knowledge.
 - **Knowledge is not real-time:** Uploaded files are indexed at upload time. If you update a persona `.md`, re-upload the file to the Project.
-- **No code execution:** Unlike Claude Code, Claude.ai Projects cannot run scripts, read local files, or execute shell commands. Outputs are text only — no automated file writes.
+- **No code execution:** Claude.ai Projects cannot run scripts, read local files, or execute shell commands. Outputs are text only — no automated file writes.
 - **Conversation isolation:** Conversations within a Project share instructions and knowledge but not each other's history. Claude in Conversation B does not remember what was said in Conversation A.
 - **Pipeline state is manual:** For multi-stage pipelines, Claude tracks state within a single conversation. If you close the conversation mid-pipeline, you must provide context to resume in a new conversation.
-- **No automatic routing:** Claude.ai Projects do not automatically route tasks to different personas. Routing decisions must be prompted explicitly.
+
+**Need more?** Several of these limitations are addressed by Claude Code. See the [Claude Code adapter](claude-code-adapter.md) for:
+- Code execution and file system access
+- Persistent memory across conversations (via CLAUDE.md and the memory system)
+- Automated pipeline state management
+- Automatic routing via the `/orchestrate` command
