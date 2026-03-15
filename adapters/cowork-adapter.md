@@ -44,11 +44,9 @@ This maps directly to the AI Persona System's composability model: each persona 
    - System prompt: full contents of `master-expert/meta-orchestrator.md`
    - Role: receives all incoming tasks, routes to specialists
 
-3. Upload `registry/registry.yaml` as shared project context so the coordinator can reference persona IDs and capabilities
+3. Add specialist agents (see Pattern 2)
 
-4. Add specialist agents (see Pattern 2)
-
-5. Provide tasks to the coordinator:
+4. Provide tasks to the coordinator:
 ```
 Task: Produce a board-ready assessment of our AI vendor integration options.
 We need: security posture analysis, ROI model for top 3 vendors, architectural fit review.
@@ -116,7 +114,7 @@ Return output to coordinator when complete.
 |---|---|
 | AI vendor assessment | persona-006, persona-007, persona-008, persona-009, persona-012 |
 | Content production | persona-019, persona-020, persona-021, persona-022 |
-| Example Assessment | persona-004, persona-005, persona-006, persona-007, persona-008, persona-009 |
+| Assessment pipeline | persona-004, persona-005, persona-006, persona-007, persona-008, persona-009 |
 | Technical architecture review | persona-006, persona-010, persona-012, persona-015 |
 
 ---
@@ -220,6 +218,6 @@ In Cowork, configure the agent's input/output expectations to match these specs.
 - **No shared memory across agent threads:** Each agent in Cowork has its own context window. Shared knowledge (registry, domain docs) must be uploaded to the project level and available to all agents.
 - **Coordinator routing is prompt-driven, not programmatic:** The coordinator routes by reading its instructions and making judgment calls — it does not use a deterministic routing algorithm. Ambiguous tasks may route to the wrong specialist.
 - **Pipeline state is ephemeral:** Cowork does not natively persist pipeline state between sessions. If a pipeline run is interrupted, restart from the last completed stage manually.
-- **Parallel execution constraints:** Fully parallel agent execution (e.g., 4 specialists working simultaneously on stage 2 of the Example pipeline) depends on Cowork's concurrency model. Verify concurrent agent limits for your plan before designing parallel stages.
+- **Parallel execution constraints:** Fully parallel agent execution (e.g., 4 specialists working simultaneously on a parallel assessment stage) depends on Cowork's concurrency model. Verify concurrent agent limits for your plan before designing parallel stages.
 - **Persona file size:** Very large persona files (>8K tokens) as agent system prompts may compress or lose lower-priority sections. Prioritize Role & Goal, Cognitive Posture, Constraints, and Interface Contract. Trim Golden Samples if needed.
 - **No cross-agent memory by default:** Agent A does not know what Agent B said in a previous conversation. For continuity, route all context through the coordinator, which aggregates and forwards relevant outputs.

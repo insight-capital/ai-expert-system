@@ -195,11 +195,10 @@ For repositories requiring multiple expert perspectives (e.g., a platform repo w
 |---|---|---|
 | AI/ML platform | persona-012 (AI CTO) | persona-006, persona-007 |
 | Agent infrastructure | persona-006 (Agentic Systems Architect) | persona-010, persona-005 |
-| LLM integration layer | persona-005 (LLM Agent Engineer) | persona-011, persona-006 |
 | Data pipeline | persona-018 (Data Strategy Lead) | persona-006, persona-007 |
-| Productivity tooling | persona-017 (AI-Augmented Productivity Lead) | persona-014 |
-| Content/marketing platform | persona-019 (Content Research Strategist) | persona-022, persona-023 |
 | Security-critical system | persona-007 (Security & Risk Lead) | persona-012, persona-006 |
+
+For additional personas by domain, see `registry/registry.yaml`.
 
 ---
 

@@ -105,7 +105,6 @@ The full persona `.md` file content can be pasted into Instructions without trun
 Click **Add files** and upload:
 - `personas/data-strategy-lead.md` (full file)
 - Any project-specific schema docs, ERDs, or pipeline specs
-- `registry/registry.yaml` (optional, for cross-persona routing awareness)
 
 **Step 5 — Save and test:**
 - Click **Save**
@@ -238,54 +237,18 @@ To share: Open the Gem > click the share icon > add Google Workspace users or se
 
 ---
 
-## All 47 Personas — Gem Configuration Reference
+## Persona to Gem Name Reference
+
+A few examples of Gem configurations:
 
 | ID | Persona Name | Gem Name | Suggested Context Files |
 |---|---|---|---|
-| persona-004 | AI Services Operations Researcher | AI Ops Researcher | client context, registry.yaml |
-| persona-005 | LLM Agent Engineer | LLM Agent Engineer | agent architecture references |
-| persona-006 | Agentic Systems Architect | Agentic Architect | architecture pattern library |
 | persona-007 | Security & Risk Lead | Security & Risk Lead | compliance frameworks, threat taxonomies |
-| persona-008 | Value/ROI Lead | ROI Analyst | ROI templates, vendor comparison data |
-| persona-009 | Report Author & Editorial Director | Report Author | assessment stage outputs |
-| persona-010 | Multi-Agent Orchestration Architect | Orchestration Architect | system design references |
-| persona-011 | Prompt Architecture Strategist | Prompt Architect | prompt pattern library |
 | persona-012 | AI Chief Technology Officer | AI CTO | tech strategy context, roadmap docs |
-| persona-013 | AI Strategy & GTM Lead | AI Strategy Lead | market context, competitive landscape |
-| persona-014 | Senior AI Product Manager | AI Product PM | product specs, user research |
-| persona-015 | AI/ML Forward Deployed Engineer | AI/ML FDE | client technical docs, model specs |
-| persona-016 | Forward Deployed Engineer (Generalist) | Forward Deployed Engineer | client system docs |
-| persona-017 | AI-Augmented Productivity Lead | Productivity Lead | workflow maps, tooling inventory |
 | persona-018 | Data Strategy Lead | Data Strategy Lead | schema docs, pipeline specs, ERDs |
-| persona-019 | Content Research Strategist | Content Strategist | author config, style guide |
 | persona-020 | Business Blog Ghostwriter | Ghostwriter | voice template, style samples |
-| persona-021 | Business Content Fact-Checker | Fact-Checker | source library, prior articles |
-| persona-022 | Business Content Editor | Content Editor | style guide, editorial standards |
-| persona-023 | SAEO Strategist | SAEO Strategist | content inventory, SEO data |
-| persona-024 | Content Adaptation Specialist | Content Adapter | platform specs, source content |
-| persona-028 | AI / Emerging Technology Lawyer | AI Tech Lawyer | ai/ml-law-and-regulation, data-use-and-privacy |
-| persona-029 | Commercial Contracts Lawyer | Contracts Lawyer | saas-and-technology-licensing, venture-studio-operating-and-jv-agreements |
-| persona-030 | Corporate Counsel | Corporate Counsel | delaware-c-corp-formation-for-venture-backed-startups, delaware-llc-formation-and-operating-agreements-for-holding-companies,-spvs,-and-venture-studios |
-| persona-031 | Corporate Dissolution & Wind-Down Counsel | Wind-Down Counsel | state-corporate-dissolution-law, certificate-of-dissolution-mechanics |
-| persona-032 | Tax Attorney | Tax Attorney | entity-structuring, cross-border-/-international |
-| persona-033 | Meridian -- Web3 Valuation & Digital Assets Advisor | Web3 Valuation Advisor | construction-and-maintenance-of-crypto-exposed-public-company-comp-sets:-miners, relevant-multiples:-ev/revenue,-ev/ebitda,-ev/active-users,-p/e,-price/book |
-| persona-034 | Senior Valuation & Corporate Finance Advisor | Valuation Advisor | private-market-/-venture-stage-methods, public-market-methods |
-| persona-035 | Strategic Valuation Positioning Advisor | Valuation Positioning Advisor | deep-fluency-in-valuation-methodologies:-dcf,-comparable-company-analysis,-precedent-transactions,-lbo-analysis,-sum-of-the-parts,-and-venture-stage-frameworks, expertise-in-multiple-expansion-mechanics:-what-drives-a-company-from-4x-to-12x-revenue-without-a-growth-rate-change-—-shift-in-perceived-business-model,-market-category,-margin-trajectory,-or-revenue-quality |
-| persona-036 | Strategic Finance & Unit Economics Diligence Lead | Finance Diligence Lead | saas-metrics:-arr/mrr-construction,-net-revenue-retention,-logo-retention,-expansion-revenue-mechanics,-contraction-and-churn-decomposition, marketplace-and-platform-economics:-take-rates,-gmv-to-revenue-conversion,-liquidity-dynamics,-supply/demand-balance-metrics |
-| persona-037 | Principal Engineer -- Code Auditor | Code Auditor | security-engineering |
-| persona-038 | Principal Security Consultant | Security Consultant | security-engineering |
-| persona-039 | Cybersecurity Vulnerability Advisor | Cybersecurity Advisor | application-security, infrastructure-&-cloud |
-| persona-040 | Buy-Side M&A Advisor | Buy-Side M&A | m&a-/-deal-execution |
-| persona-041 | Post-Merger Integration Lead | PMI Lead | day-1-readiness, first-100-days |
-| persona-042 | Insurance Risk Advisor | Insurance Risk | m&a-/-deal-execution |
-| persona-043 | M&A Data Integration Engineer | M&A Data Integration | m&a-/-deal-execution |
-| persona-044 | Debt & Capital Markets Advisor | Debt Capital Markets | full-capital-structure-design:-senior-secured, tranche-level-sizing:-revolver-sizing-based-on-working-capital-seasonality-and-peak-borrowing-needs;-term-loan-sizing-based-on-leverage-capacity,-amortization-tolerance,-and-cash-flow-sweep-mechanics |
-| persona-045 | Senior Transaction Services Advisor (Quality of Earnings) | Quality of Earnings | full-bridge-construction-methodology:-reported-net-income-→-add-back-interest,-taxes,-d&a-→-reported-ebitda-→-management-adjustments-→-buyer-adjustments-→-pro-forma-adjustments-→-run-rate-ltm-ebitda, adjustment-taxonomy:-non-recurring-vs |
-| persona-046 | Capital Markets & Strategic Transactions Advisor | Capital Markets Advisor | valuation-finance |
-| persona-047 | M&A Legal Counsel | M&A Legal Counsel | drafting-and-negotiating-asset-purchase-agreements,-stock-purchase-agreements,-merger-agreements, purchase-price-mechanics:-fixed-price,-locked-box,-closing-date-balance-sheet-adjustments,-working-capital-true-ups,-earnouts |
-| persona-048 | Regulatory & Licensing Specialist | Regulatory Licensing | hsr/antitrust-filing-requirements-and-thresholds, cfius-review-process-for-foreign-investment-in-u |
-| persona-049 | Applied AI Engineering Lead | AI Engineering Lead | general-ai-biz |
-| persona-050 | Go-to-Market Strategy Lead | GTM Strategy Lead | market-segmentation-&-targeting, buyer-persona-&-buying-journey-analysis |
+
+For a complete list, see `registry/registry.yaml`.
 
 ---
 
@@ -293,8 +256,7 @@ To share: Open the Gem > click the share icon > add Google Workspace users or se
 
 - **No programmatic execution:** Unlike Claude Code, Gemini Gems cannot run shell commands, write files, or execute code against a local filesystem. Personas with operational components are advisory only in Gem context.
 - **Instructions field is not versioned:** If you update a persona file, manually re-paste updated content into the Gem Instructions. There is no auto-sync from a file path.
-- **Gem availability:** Gems require Gemini Advanced (Google One AI Premium at ~$20/month or Google Workspace with Gemini add-on). Not available on free Gemini tier.
+- **Gem availability:** Gems require Gemini Advanced (Google One AI Premium or Google Workspace with Gemini add-on). Check current pricing on Google's plans page. Not available on free Gemini tier.
 - **No native pipeline state tracking:** Pipeline Gems track state within a single conversation only. If the conversation is closed mid-pipeline, provide context to resume in a new conversation.
 - **Context file formats:** Gemini accepts PDF, text, Markdown, code files, and images. For personas referencing `.docx` or `.xlsx` source materials, convert to PDF or Markdown before uploading.
 - **Persona drift on long conversations:** On very long conversations (50+ turns), Gemini may drift from persona constraints. If drift occurs, start a new conversation in the same Gem — the Instructions reset cleanly.
-- **No registry API:** The Gem cannot query `registry.yaml` as a structured database. Upload the registry as a context file for document-level reference only.
