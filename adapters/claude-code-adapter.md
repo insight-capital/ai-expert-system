@@ -227,6 +227,13 @@ Review the same architecture. Focus on the risks the CTO flagged.
 **Keeping commands current:**
 If you update a persona file, re-copy it to `~/.claude/commands/`. The directory is read at session start — no daemon to restart.
 
+**Creating new personas:**
+Use the `/create-persona` skill to generate a complete persona from a role description:
+```
+/create-persona Senior M&A Integration Strategist
+```
+Generates the persona `.md` file, saves it to `personas/`, and auto-registers via `sync_registry.py`.
+
 **Existing commands as a reference:**
 Your 11 current commands (`~/.claude/commands/`) follow the same pattern — `workflow-viz.md`, `company-intel.md`, `reddit-research.md`, etc. Persona files drop in identically.
 

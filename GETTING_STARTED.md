@@ -31,7 +31,29 @@ Pick any persona from `personas/`. Each `.md` file is a self-contained system pr
 
 For other platforms, see the adapter guide in `adapters/` for your platform.
 
-## Step 4: Deploy the Meta-Orchestrator (Intelligent Routing)
+## Step 4: Create Your Own Experts
+
+Upload `methodology/v2-framework.md` as a Knowledge file and ask the LLM to create a new persona. Takes 1-2 minutes. Save the persona `.md` file in `personas/`. You can use it immediately -- just deploy it to your LLM platform following the adapter guide.
+
+If you want to use the Meta-Orchestrator for automatic routing, register the persona in the registry:
+
+**Registry sync (requires terminal):**
+```bash
+python tools/sync_registry.py
+```
+Scans for unregistered personas, extracts metadata, and adds them to the registry. Run `python tools/validate_registry.py` afterward to verify.
+
+In Claude Code, you can also use `/create-persona` -- see the [Claude Code adapter](adapters/claude-code-adapter.md).
+
+## Step 5: Build Expert Teams
+
+Two included personas specialize in vetting team composition:
+- **Multi-Agent Orchestration Architect** -- organization design and persona engineering
+- **Agentic Systems Architect** -- governance, autonomy classification, interface contracts
+
+Or use the Meta-Orchestrator at L5 to design pipelines automatically.
+
+## Step 6: Deploy the Meta-Orchestrator (Intelligent Routing)
 
 Once you have multiple personas, deploy the Meta-Orchestrator as your system entry point.
 
@@ -42,45 +64,6 @@ Upload to your LLM platform:
 The Meta-Orchestrator classifies tasks into resolution levels (L1-L6) from a single direct prompt to multi-persona pipelines to gap identification and new expert creation. At L6, the orchestrator identifies capability gaps and can auto-create the missing persona if you're running in Claude Code.
 
 Note: `registry/registry.yaml` does NOT need to be uploaded -- the routing table is embedded in the orchestrator file. The registry is for the Python tooling only.
-
-## Step 5: Create Your Own Experts
-
-Upload `methodology/v2-framework.md` as a Knowledge file and ask the LLM to create a new persona. Takes 1-2 minutes. Then register it using one of three methods:
-
-### Option A: Auto-sync (easiest)
-Save a `.md` persona file in `personas/`, then run:
-```bash
-python tools/sync_registry.py
-```
-Scans for any unregistered personas and auto-registers them. Zero prompts, idempotent.
-
-### Option B: Interactive registration
-```bash
-python tools/add_persona.py path/to/new-persona.md
-```
-Copies the file to `personas/`, extracts metadata, and prompts for any fields it can't auto-detect.
-
-### Option C: Claude Code skill
-```
-/create-persona Senior M&A Integration Strategist
-```
-Generates a complete persona from a role description, saves it, and auto-registers via sync.
-
-## Step 6: Build Expert Teams
-
-Two included personas specialize in vetting team composition:
-- **Multi-Agent Orchestration Architect** -- organization design and persona engineering
-- **Agentic Systems Architect** -- governance, autonomy classification, interface contracts
-
-Or use the Meta-Orchestrator at L5 to design pipelines automatically.
-
-## Step 7: Validate & Maintain
-
-```bash
-python tools/validate_registry.py
-```
-
-Run this after adding or modifying personas to ensure registry consistency.
 
 ## File Reference
 
